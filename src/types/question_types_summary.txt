@@ -1,0 +1,12 @@
+
+SAT题型分析报告
+================
+
+总文件数: 5
+成功分析: 5
+分析失败: 0
+
+题型分布:
+  math-heart-of-algebra: 2 题 (40.0%) - 代数核心题
+  writing-lang-expression-of-ideas: 2 题 (40.0%) - 写作表达题
+  math-additional-topics: 1 题 (20.0%) - 附加数学题
