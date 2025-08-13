@@ -158,11 +158,11 @@ def main():
     args = parser.parse_args()
     
     # 如果没有提供API密钥，尝试从环境变量获取
-    api_key = args.api_key or os.getenv('OPENAI_API_KEY')
+    api_key = args.api_key or os.getenv('OPENAI_API_KEY') or os.getenv('OPENROUTER_API_KEY')
     if not api_key:
-        print("❌ 需要提供OpenAI API密钥")
+        print("❌ 需要提供API密钥")
         print("请通过以下方式之一提供:")
-        print("1. 设置环境变量: export OPENAI_API_KEY='your_key'")
+        print("1. 设置环境变量: export OPENAI_API_KEY='your_key' 或 export OPENROUTER_API_KEY='your_key'")
         print("2. 使用参数: --api-key your_key")
         sys.exit(1)
     

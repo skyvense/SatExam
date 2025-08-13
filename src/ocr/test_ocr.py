@@ -7,14 +7,14 @@ import os
 import sys
 from pathlib import Path
 
-# 设置你的OpenAI API密钥
-OPENAI_API_KEY = "your_openai_api_key_here"  # 请替换为你的实际API密钥
+# 设置你的API密钥 (支持OpenAI或OpenRouter)
+API_KEY = "your_api_key_here"  # 请替换为你的实际API密钥
 
 def test_ocr():
     """测试OCR功能"""
     
-    # 设置API密钥
-    os.environ['OPENAI_API_KEY'] = OPENAI_API_KEY
+    # 设置API密钥 (优先使用OpenRouter)
+    os.environ['OPENROUTER_API_KEY'] = API_KEY
     
     # 测试图片路径
     test_image = "../../data/output/2025.3 北美A卷/001.png"
@@ -58,11 +58,12 @@ def test_ocr():
         print(f"❌ 错误: {str(e)}")
 
 if __name__ == "__main__":
-    if OPENAI_API_KEY == "your_openai_api_key_here":
-        print("⚠️  请先在脚本中设置你的OpenAI API密钥!")
+    if API_KEY == "your_api_key_here":
+        print("⚠️  请先在脚本中设置你的API密钥!")
         print("1. 打开 test_ocr.py 文件")
-        print("2. 找到 OPENAI_API_KEY 变量")
-        print("3. 将 'your_openai_api_key_here' 替换为你的实际API密钥")
+        print("2. 找到 API_KEY 变量")
+        print("3. 将 'your_api_key_here' 替换为你的实际API密钥")
+        print("4. 支持OpenAI API密钥或OpenRouter API密钥")
         sys.exit(1)
     
     test_ocr()

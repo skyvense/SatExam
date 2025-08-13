@@ -26,18 +26,31 @@ import requests
 class OCRProcessor:
     """OCR处理器"""
     
-    def __init__(self, api_key: Optional[str] = None):
+    def __init__(self, api_key: Optional[str] = None, base_url: Optional[str] = None):
         """
         初始化OCR处理器
         
         Args:
-            api_key: OpenAI API密钥，如果为None则从环境变量获取
+            api_key: API密钥，如果为None则从环境变量获取
+            base_url: API基础URL，用于OpenRouter等第三方服务
         """
-        self.api_key = api_key or os.getenv('OPENAI_API_KEY')
+        self.api_key = api_key or os.getenv('OPENAI_API_KEY') or os.getenv('OPENROUTER_API_KEY')
         if not self.api_key:
-            raise ValueError("需要提供OpenAI API密钥，请设置OPENAI_API_KEY环境变量或通过参数传入")
+            raise ValueError("需要提供API密钥，请设置OPENAI_API_KEY或OPENROUTER_API_KEY环境变量或通过参数传入")
         
-        self.client = openai.OpenAI(api_key=self.api_key)
+        # 设置API配置
+        if base_url:
+            self.client = openai.OpenAI(api_key=self.api_key, base_url=base_url)
+        else:
+            # 检查是否使用OpenRouter
+            openrouter_key = os.getenv('OPENROUTER_API_KEY')
+            if openrouter_key:
+                self.client = openai.OpenAI(
+                    api_key=openrouter_key,
+                    base_url="https://openrouter.ai/api/v1"
+                )
+            else:
+                self.client = openai.OpenAI(api_key=self.api_key)
     
     def encode_image_to_base64(self, image_path: Path) -> str:
         """
@@ -86,9 +99,9 @@ class OCRProcessor:
 语言：{language}
 """
             
-            # 调用GPT-4 Vision API
+            # 调用Vision API (支持OpenRouter)
             response = self.client.chat.completions.create(
-                model="gpt-4-vision-preview",
+                model="openai/gpt-4-vision-preview",  # OpenRouter格式
                 messages=[
                     {
                         "role": "user",

@@ -1,6 +1,6 @@
 # OCR文本识别工具
 
-使用OpenAI GPT-4 Vision API进行高质量的OCR文本识别，将SAT考试图片转换为文本文件。
+使用OpenAI GPT-4 Vision API或OpenRouter进行高质量的OCR文本识别，将SAT考试图片转换为文本文件。
 
 ## 功能特性
 
@@ -23,7 +23,11 @@ pip install -r requirements.txt
 
 ### 方法1: 环境变量
 ```bash
+# OpenAI API
 export OPENAI_API_KEY="your_openai_api_key_here"
+
+# 或 OpenRouter API
+export OPENROUTER_API_KEY="your_openrouter_api_key_here"
 ```
 
 ### 方法2: 命令行参数
@@ -49,7 +53,10 @@ python ocr.py --api-key your_key 001.png 001.txt
 ### 批量处理
 
 ```bash
-# 处理所有图片文件
+# 处理所有图片文件 (使用环境变量中的API密钥)
+python batch_ocr.py
+
+# 或指定API密钥
 python batch_ocr.py --api-key your_key
 
 # 限制处理文件数量
@@ -66,6 +73,10 @@ python batch_ocr.py --api-key your_key --output-dir ../data/output
 
 ```bash
 # 编辑 test_ocr.py 文件，设置你的API密钥
+python test_ocr.py
+
+# 或使用环境变量
+export OPENROUTER_API_KEY="your_key"
 python test_ocr.py
 ```
 
@@ -100,14 +111,16 @@ OCR工具会识别以下内容：
 
 - **处理速度**: 约2-5秒/图片（取决于API响应时间）
 - **准确率**: GPT-4 Vision API提供业界领先的识别准确率
-- **成本**: 每张图片约$0.01-0.03（取决于图片复杂度）
+- **成本**: 每张图片约$0.01-0.03（取决于图片复杂度和API提供商）
+- **OpenRouter优势**: 支持多种模型，价格更灵活
 
 ## 注意事项
 
-1. **API限制**: OpenAI API有速率限制，批量处理时会自动添加延迟
+1. **API限制**: API有速率限制，批量处理时会自动添加延迟
 2. **图片质量**: 高分辨率图片识别效果更好
-3. **网络连接**: 需要稳定的网络连接访问OpenAI API
+3. **网络连接**: 需要稳定的网络连接访问API
 4. **成本控制**: 建议先处理少量文件测试效果
+5. **OpenRouter**: 支持多种模型选择，可根据需要调整
 
 ## 错误处理
 
