@@ -29,7 +29,7 @@ logger = logging.getLogger(__name__)
 class SATPDFParser:
     """SAT PDF文件解析器"""
     
-    def __init__(self, data_dir: str = "../data"):
+    def __init__(self, data_dir: str = "../../data/income/SAT真题"):
         """
         初始化解析器
         
