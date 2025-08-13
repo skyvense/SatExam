@@ -101,7 +101,7 @@ class OCRProcessor:
             
             # 调用Vision API (支持OpenRouter)
             response = self.client.chat.completions.create(
-                model="openai/gpt-4-vision-preview",  # OpenRouter格式
+                model="anthropic/claude-3-5-sonnet",  # OpenRouter支持的Vision模型
                 messages=[
                     {
                         "role": "user",
@@ -154,6 +154,8 @@ class OCRProcessor:
                 raise ValueError(f"不支持的图片格式: {input_path.suffix}")
             
             print(f"正在处理: {input_path.name}")
+            print(f"输入路径: {input_path}")
+            print(f"输出路径: {output_path}")
             
             # 提取文本
             text = self.extract_text_from_image(input_path, language)

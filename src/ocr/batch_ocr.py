@@ -41,7 +41,7 @@ def get_all_image_files(output_dir: str = "../../data/output") -> List[Tuple[Pat
     return sorted(image_files)
 
 
-def batch_process_images(api_key: str = None, output_dir: str = "../data/output", 
+def batch_process_images(api_key: str = None, output_dir: str = "../../data/output", 
                         max_files: int = None, start_from: int = 0) -> None:
     """批量处理图片文件"""
     
@@ -96,6 +96,8 @@ def batch_process_images(api_key: str = None, output_dir: str = "../data/output"
             continue
         
         print(f"[{current_index}/{total_files}] 处理: {image_path.name}")
+        print(f"  输入路径: {image_path}")
+        print(f"  输出路径: {text_path}")
         
         # 处理文件
         try:
@@ -148,8 +150,8 @@ def main():
     
     parser = argparse.ArgumentParser(description="批量OCR处理图片文件")
     parser.add_argument("--api-key", type=str, help="OpenAI API密钥")
-    parser.add_argument("--output-dir", "-o", default="../data/output", 
-                       help="输出目录 (默认: ../data/output)")
+    parser.add_argument("--output-dir", "-o", default="../../data/output", 
+                       help="输出目录 (默认: ../../data/output)")
     parser.add_argument("--max-files", "-m", type=int,
                        help="最大处理文件数")
     parser.add_argument("--start-from", "-s", type=int, default=0,
