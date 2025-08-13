@@ -10,6 +10,8 @@
 - 📈 生成详细的分析报告
 - 💾 保存分析结果到JSON文件
 - 📋 生成摘要报告
+- 🖼️ 将PDF按页分割为PNG图片
+- 📁 自动复制原PDF到输出目录
 
 ## 安装依赖
 
@@ -55,6 +57,12 @@ python pdf_parser.py
 
 # 运行使用示例
 python example_usage.py
+
+# 运行PDF分割器
+python pdf_splitter.py input.pdf data/output --dpi 200
+
+# 运行分割器示例
+python example_splitter.py
 ```
 
 ## 输出文件
@@ -74,6 +82,43 @@ python example_usage.py
    - 检测的SAT部分（阅读、写作、数学、作文）
    - 估算的题目数量
    - 关键词识别
+
+## PDF分割器
+
+PDF分割器可以将单个PDF文件按页分割为PNG图片：
+
+### 基本用法
+
+```bash
+python pdf_splitter.py <pdf_path> <output_root> [--dpi <dpi>]
+```
+
+### 参数说明
+
+- `pdf_path` - PDF文件路径
+- `output_root` - 输出根目录
+- `--dpi` - 渲染DPI (默认: 200)
+
+### 输出结构
+
+```
+data/output/
+└── {filename}/
+    ├── 001.png
+    ├── 002.png
+    ├── ...
+    └── {filename}.pdf
+```
+
+### 示例
+
+```bash
+# 基本用法
+python pdf_splitter.py input.pdf data/output
+
+# 指定DPI
+python pdf_splitter.py input.pdf data/output --dpi 300
+```
 
 ## 自定义分析
 
@@ -96,7 +141,9 @@ def custom_analysis(self, text: str) -> Dict:
 ```
 src/parser/
 ├── pdf_parser.py          # 主解析器
+├── pdf_splitter.py        # PDF分割器
 ├── example_usage.py       # 使用示例
+├── example_splitter.py    # 分割器示例
 ├── requirements.txt       # 依赖列表
 └── README.md             # 说明文档
 ```
