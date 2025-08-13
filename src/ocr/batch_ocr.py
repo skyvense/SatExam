@@ -13,47 +13,81 @@ from typing import List, Tuple
 from ocr import OCRProcessor
 
 
-def get_all_image_files(output_dir: str = "../../data/output") -> List[Tuple[Path, Path]]:
+def get_all_image_files(output_dir: str = "/Volumes/ext/SatExams/data/output", target_dir: str = None) -> List[Tuple[Path, Path]]:
     """
     获取所有需要处理的图片文件
+    
+    Args:
+        output_dir: 输出根目录
+        target_dir: 指定要处理的子目录（可选），支持绝对路径（以/开头）
     
     Returns:
         图片文件路径和对应输出文本文件路径的列表
     """
     image_files = []
-    output_path = Path(output_dir)
     
-    if not output_path.exists():
-        print(f"输出目录不存在: {output_dir}")
-        return []
-    
-    # 遍历所有子目录
-    for subdir in output_path.iterdir():
-        if not subdir.is_dir():
-            continue
-            
+    if target_dir and target_dir.startswith('/'):
+        # 处理绝对路径
+        target_path = Path(target_dir)
+        if not target_path.exists():
+            print(f"指定目录不存在: {target_path}")
+            return []
+        
         # 查找PNG文件
-        for png_file in subdir.glob("*.png"):
+        for png_file in target_path.glob("*.png"):
             # 生成对应的文本文件路径
-            text_file = subdir / f"{png_file.stem}.txt"
+            text_file = target_path / f"{png_file.stem}.txt"
             image_files.append((png_file, text_file))
+    else:
+        # 处理相对路径（作为output_dir的子目录）
+        output_path = Path(output_dir)
+        
+        if not output_path.exists():
+            print(f"输出目录不存在: {output_dir}")
+            return []
+        
+        if target_dir:
+            # 处理指定子目录
+            target_path = output_path / target_dir
+            if not target_path.exists():
+                print(f"指定目录不存在: {target_path}")
+                return []
+            
+            # 查找PNG文件
+            for png_file in target_path.glob("*.png"):
+                # 生成对应的文本文件路径
+                text_file = target_path / f"{png_file.stem}.txt"
+                image_files.append((png_file, text_file))
+        else:
+            # 遍历所有子目录
+            for subdir in output_path.iterdir():
+                if not subdir.is_dir():
+                    continue
+                    
+                # 查找PNG文件
+                for png_file in subdir.glob("*.png"):
+                    # 生成对应的文本文件路径
+                    text_file = subdir / f"{png_file.stem}.txt"
+                    image_files.append((png_file, text_file))
     
     return sorted(image_files)
 
 
-def batch_process_images(api_key: str = None, output_dir: str = "../../data/output", 
-                        max_files: int = None, start_from: int = 0) -> None:
+def batch_process_images(api_key: str = None, output_dir: str = "/Volumes/ext/SatExams/data/output", 
+                        target_dir: str = None, max_files: int = None, start_from: int = 0) -> None:
     """批量处理图片文件"""
     
     print("=== 批量OCR处理 ===")
     print(f"输出目录: {output_dir}")
+    if target_dir:
+        print(f"目标目录: {target_dir}")
     if max_files:
         print(f"最大处理文件数: {max_files}")
     print(f"起始位置: {start_from}")
     print()
     
     # 获取所有图片文件
-    image_files = get_all_image_files(output_dir)
+    image_files = get_all_image_files(output_dir, target_dir)
     total_files = len(image_files)
     
     if total_files == 0:
@@ -150,8 +184,10 @@ def main():
     
     parser = argparse.ArgumentParser(description="批量OCR处理图片文件")
     parser.add_argument("--api-key", type=str, help="OpenAI API密钥")
-    parser.add_argument("--output-dir", "-o", default="../../data/output", 
-                       help="输出目录 (默认: ../../data/output)")
+    parser.add_argument("--output-dir", "-o", default="/Volumes/ext/SatExams/data/output", 
+                       help="输出目录 (默认: /Volumes/ext/SatExams/data/output)")
+    parser.add_argument("--target-dir", "-t", type=str,
+                       help="指定要处理的目录，支持绝对路径（以/开头）或相对路径（作为output-dir的子目录）")
     parser.add_argument("--max-files", "-m", type=int,
                        help="最大处理文件数")
     parser.add_argument("--start-from", "-s", type=int, default=0,
@@ -171,6 +207,7 @@ def main():
     batch_process_images(
         api_key=api_key,
         output_dir=args.output_dir,
+        target_dir=args.target_dir,
         max_files=args.max_files,
         start_from=args.start_from
     )

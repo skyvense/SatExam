@@ -2,11 +2,19 @@
 SAT题型分析报告
 ================
 
-总文件数: 5
-成功分析: 5
+总文件数: 98
+成功分析: 98
 分析失败: 0
 
 题型分布:
-  math-heart-of-algebra: 2 题 (40.0%) - 代数核心题
-  writing-lang-expression-of-ideas: 2 题 (40.0%) - 写作表达题
-  math-additional-topics: 1 题 (20.0%) - 附加数学题
+  math-heart-of-algebra: 25 题 (25.5%) - 代数核心题
+  reading-command-of-evidence: 14 题 (14.3%) - 阅读理解题
+  writing-lang-grammar: 11 题 (11.2%) - 写作语法题
+  writing-lang-expression-of-ideas: 10 题 (10.2%) - 写作表达题
+  math-problem-solving-data-analysis: 10 题 (10.2%) - 数据分析题
+  writing-lang-command-of-evidence: 8 题 (8.2%) - 写作证据题
+  math-passport-to-advanced-math: 7 题 (7.1%) - 高等数学题
+  math-additional-topics: 6 题 (6.1%) - 附加数学题
+  writing-lang-words-in-context: 5 题 (5.1%) - 写作词汇题
+  reading-words-in-context: 1 题 (1.0%) - 阅读词汇题
+  reading-evidence: 1 题 (1.0%) - 阅读证据题

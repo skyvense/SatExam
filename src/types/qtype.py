@@ -9,6 +9,8 @@ import json
 import re
 import sys
 import os
+import sqlite3
+from datetime import datetime
 from pathlib import Path
 from typing import Dict, List, Optional, Tuple
 
@@ -106,6 +108,111 @@ class QuestionTypeAnalyzer:
                 self.client = openai.OpenAI(api_key=self.api_key)
         else:
             self.client = None
+        
+        # 初始化数据库连接
+        self.db_path = Path("/Volumes/ext/SatExams/data/types.db")
+        self._init_database()
+    
+    def _init_database(self):
+        """初始化数据库"""
+        try:
+            conn = sqlite3.connect(self.db_path)
+            cursor = conn.cursor()
+            cursor.execute('''
+                CREATE TABLE IF NOT EXISTS question_types (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    png_path TEXT NOT NULL,
+                    question_type TEXT NOT NULL,
+                    txt_content TEXT,
+                    add_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+                )
+            ''')
+            conn.commit()
+            conn.close()
+            print(f"数据库初始化成功: {self.db_path}")
+        except Exception as e:
+            print(f"数据库初始化失败: {e}")
+    
+    def save_to_database(self, png_path: str, question_type: str, txt_content: str = None):
+        """
+        保存题型分析结果到数据库
+        
+        Args:
+            png_path: PNG文件路径（相对于data目录）
+            question_type: 识别的题型
+            txt_content: 文本内容
+        """
+        try:
+            conn = sqlite3.connect(self.db_path)
+            cursor = conn.cursor()
+            
+            # 检查是否已存在
+            cursor.execute("SELECT id FROM question_types WHERE png_path = ?", (png_path,))
+            existing = cursor.fetchone()
+            
+            if existing:
+                # 更新现有记录
+                cursor.execute("""
+                    UPDATE question_types 
+                    SET question_type = ?, txt_content = ?, add_time = CURRENT_TIMESTAMP
+                    WHERE png_path = ?
+                """, (question_type, txt_content, png_path))
+                print(f"更新数据库记录: {png_path}")
+            else:
+                # 插入新记录
+                cursor.execute("""
+                    INSERT INTO question_types (png_path, question_type, txt_content)
+                    VALUES (?, ?, ?)
+                """, (png_path, question_type, txt_content))
+                print(f"插入数据库记录: {png_path}")
+            
+            conn.commit()
+            conn.close()
+            
+        except Exception as e:
+            print(f"保存到数据库失败: {e}")
+    
+    def get_from_database(self, png_path: str = None) -> List[Dict]:
+        """
+        从数据库获取题型分析结果
+        
+        Args:
+            png_path: 可选的PNG文件路径，如果为None则获取所有记录
+            
+        Returns:
+            结果列表
+        """
+        try:
+            conn = sqlite3.connect(self.db_path)
+            cursor = conn.cursor()
+            
+            if png_path:
+                cursor.execute("""
+                    SELECT id, png_path, question_type, txt_content, add_time
+                    FROM question_types WHERE png_path = ?
+                """, (png_path,))
+            else:
+                cursor.execute("""
+                    SELECT id, png_path, question_type, txt_content, add_time
+                    FROM question_types ORDER BY add_time DESC
+                """)
+            
+            results = []
+            for row in cursor.fetchall():
+                results.append({
+                    "id": row[0],
+                    "png_path": row[1],
+                    "question_type": row[2],
+                    "txt_content": row[3],
+                    "add_time": row[4]
+                })
+            
+            conn.close()
+            return results
+            
+        except Exception as e:
+            print(f"从数据库获取数据失败: {e}")
+            return []
     
     def analyze_text(self, text: str) -> Dict[str, float]:
         """
@@ -263,30 +370,81 @@ class QuestionTypeAnalyzer:
         
         return best_type, confidence, scores
     
-    def analyze_file(self, file_path: Path) -> Dict:
+    def analyze_file(self, file_path: Path, save_to_db: bool = True, force_reanalyze: bool = False) -> Dict:
         """
         分析单个文件
         
         Args:
             file_path: 文本文件路径
+            save_to_db: 是否保存到数据库
+            force_reanalyze: 是否强制重新分析（忽略.type.txt文件）
             
         Returns:
             分析结果字典
         """
         try:
-            with open(file_path, 'r', encoding='utf-8') as f:
-                text = f.read()
+            # 检查是否存在.type.txt文件
+            type_file = file_path.with_suffix('.type.txt')
+            if type_file.exists() and not force_reanalyze:
+                # 如果.type.txt文件存在且不强制重新分析，直接读取
+                with open(type_file, 'r', encoding='utf-8') as f:
+                    qtype = f.read().strip()
+                
+                # 读取原文本文件
+                with open(file_path, 'r', encoding='utf-8') as f:
+                    text = f.read()
+                
+                result = {
+                    "filename": file_path.name,
+                    "filepath": str(file_path),
+                    "question_type": qtype,
+                    "confidence": 1.0,  # 从文件读取的置信度为1.0
+                    "scores": {qtype: 10},  # 模拟分数
+                    "text_preview": text[:200] + "..." if len(text) > 200 else text,
+                    "source": "type_file"  # 标记来源
+                }
+                
+                print(f"  从.type.txt文件读取题型: {qtype}")
+            else:
+                # 如果.type.txt文件不存在或强制重新分析，进行AI分析
+                with open(file_path, 'r', encoding='utf-8') as f:
+                    text = f.read()
+                
+                qtype, confidence, scores = self.classify_question(text)
+                
+                result = {
+                    "filename": file_path.name,
+                    "filepath": str(file_path),
+                    "question_type": qtype,
+                    "confidence": confidence,
+                    "scores": scores,
+                    "text_preview": text[:200] + "..." if len(text) > 200 else text,
+                    "source": "ai_analysis"  # 标记来源
+                }
+                
+                # 保存题型到.type.txt文件
+                try:
+                    with open(type_file, 'w', encoding='utf-8') as f:
+                        f.write(qtype)
+                    print(f"  保存题型到文件: {type_file.name}")
+                except Exception as e:
+                    print(f"  保存.type.txt文件失败: {e}")
             
-            qtype, confidence, scores = self.classify_question(text)
+            # 保存到数据库
+            if save_to_db and "error" not in result:
+                # 构造PNG文件路径（相对于data目录）
+                # 假设TXT文件和PNG文件在同一目录，只是扩展名不同
+                png_path = str(file_path).replace('.txt', '.png')
+                # 转换为相对于data目录的路径
+                data_root = Path("/Volumes/ext/SatExams/data")
+                try:
+                    relative_png_path = str(Path(png_path).relative_to(data_root))
+                    self.save_to_database(relative_png_path, result['question_type'], text)
+                except ValueError:
+                    # 如果无法计算相对路径，使用绝对路径
+                    self.save_to_database(png_path, result['question_type'], text)
             
-            return {
-                "filename": file_path.name,
-                "filepath": str(file_path),
-                "question_type": qtype,
-                "confidence": confidence,
-                "scores": scores,
-                "text_preview": text[:200] + "..." if len(text) > 200 else text
-            }
+            return result
             
         except Exception as e:
             return {
@@ -295,7 +453,7 @@ class QuestionTypeAnalyzer:
                 "error": str(e)
             }
     
-    def batch_analyze(self, directory: Path, pattern: str = "*.txt", max_files: Optional[int] = None) -> List[Dict]:
+    def batch_analyze(self, directory: Path, pattern: str = "*.txt", max_files: Optional[int] = None, force_reanalyze: bool = False) -> List[Dict]:
         """
         批量分析目录中的文件
         
@@ -303,6 +461,7 @@ class QuestionTypeAnalyzer:
             directory: 目录路径
             pattern: 文件匹配模式
             max_files: 最大处理文件数
+            force_reanalyze: 是否强制重新分析（忽略.type.txt文件）
             
         Returns:
             分析结果列表
@@ -316,6 +475,31 @@ class QuestionTypeAnalyzer:
         txt_files = list(directory.rglob(pattern))
         total_files = len(txt_files)
         
+        # 过滤文件：只保留主要的.txt文件，排除.type.txt和系统文件
+        txt_files = [f for f in txt_files if 
+                    f.name.endswith('.txt') and 
+                    not f.name.endswith('.type.txt') and 
+                    not f.name.startswith('._')]
+        
+        # 自然排序文件（按数字顺序）
+        def natural_sort_key(file_path):
+            # 提取文件名中的数字部分进行排序
+            filename = file_path.name
+            # 移除扩展名
+            name_without_ext = filename.rsplit('.', 1)[0]
+            # 提取数字部分
+            import re
+            numbers = re.findall(r'\d+', name_without_ext)
+            if numbers:
+                # 返回第一个数字作为排序键
+                return int(numbers[0])
+            else:
+                # 如果没有数字，按文件名排序
+                return filename
+        
+        # 按自然顺序排序
+        txt_files.sort(key=natural_sort_key)
+        
         # 限制文件数量
         if max_files:
             txt_files = txt_files[:max_files]
@@ -325,7 +509,7 @@ class QuestionTypeAnalyzer:
         
         for i, file_path in enumerate(txt_files, 1):
             print(f"[{i}/{len(txt_files)}] 分析: {file_path.name}")
-            result = self.analyze_file(file_path)
+            result = self.analyze_file(file_path, force_reanalyze=force_reanalyze)
             results.append(result)
             
             if "error" not in result:
@@ -378,11 +562,64 @@ SAT题型分析报告
         
         return report
 
+    def generate_database_summary(self) -> str:
+        """生成数据库统计报告"""
+        try:
+            conn = sqlite3.connect(self.db_path)
+            cursor = conn.cursor()
+            
+            # 获取总记录数
+            cursor.execute("SELECT COUNT(*) FROM question_types")
+            total_count = cursor.fetchone()[0]
+            
+            # 获取题型分布
+            cursor.execute("""
+                SELECT question_type, COUNT(*) as count
+                FROM question_types 
+                GROUP BY question_type 
+                ORDER BY count DESC
+            """)
+            type_distribution = cursor.fetchall()
+            
+            # 获取最新记录
+            cursor.execute("""
+                SELECT png_path, question_type, add_time
+                FROM question_types 
+                ORDER BY add_time DESC 
+                LIMIT 5
+            """)
+            recent_records = cursor.fetchall()
+            
+            conn.close()
+            
+            # 生成报告
+            report = f"""
+数据库题型分析报告
+==================
+
+总记录数: {total_count}
+
+题型分布:
+"""
+            for qtype, count in type_distribution:
+                percentage = (count / total_count) * 100 if total_count > 0 else 0
+                description = self.question_types.get(qtype, {}).get("description", "未知题型")
+                report += f"  {qtype}: {count} 题 ({percentage:.1f}%) - {description}\n"
+            
+            report += "\n最新记录:\n"
+            for png_path, qtype, add_time in recent_records:
+                report += f"  {png_path} -> {qtype} ({add_time})\n"
+            
+            return report
+            
+        except Exception as e:
+            return f"生成数据库报告失败: {e}"
+
 
 def main():
     """主函数"""
     parser = argparse.ArgumentParser(description="SAT题型识别工具")
-    parser.add_argument("input", type=str, help="输入文件或目录路径")
+    parser.add_argument("input", type=str, nargs='?', help="输入文件或目录路径")
     parser.add_argument("--output", "-o", type=str, default="question_types.json", 
                        help="输出文件 (默认: question_types.json)")
     parser.add_argument("--pattern", "-p", type=str, default="*.txt",
@@ -390,6 +627,12 @@ def main():
     parser.add_argument("--api-key", type=str, help="OpenAI或OpenRouter API密钥")
     parser.add_argument("--no-ai", action="store_true", help="禁用AI分析，仅使用规则分析")
     parser.add_argument("--max-files", "-m", type=int, help="最大处理文件数")
+    parser.add_argument("--force-reanalyze", action="store_true", help="强制重新分析，忽略.type.txt文件")
+    
+    # 数据库相关选项
+    parser.add_argument("--db-query", action="store_true", help="查询数据库中的所有记录")
+    parser.add_argument("--db-summary", action="store_true", help="生成数据库统计报告")
+    parser.add_argument("--db-path", type=str, help="查询特定PNG文件的题型")
     
     args = parser.parse_args()
     
@@ -402,12 +645,49 @@ def main():
         print("或使用 --no-ai 参数禁用AI分析")
     
     analyzer = QuestionTypeAnalyzer(api_key=api_key if not args.no_ai else None)
+    
+    # 数据库查询功能
+    if args.db_query:
+        print("=== 数据库查询 ===")
+        results = analyzer.get_from_database()
+        print(f"总记录数: {len(results)}")
+        for result in results[:10]:  # 显示前10条
+            print(f"  {result['png_path']} -> {result['question_type']} ({result['add_time']})")
+        if len(results) > 10:
+            print(f"  ... 还有 {len(results) - 10} 条记录")
+        return
+    
+    if args.db_summary:
+        print("=== 数据库统计报告 ===")
+        summary = analyzer.generate_database_summary()
+        print(summary)
+        return
+    
+    if args.db_path:
+        print(f"=== 查询PNG文件: {args.db_path} ===")
+        results = analyzer.get_from_database(args.db_path)
+        if results:
+            for result in results:
+                print(f"题型: {result['question_type']}")
+                print(f"添加时间: {result['add_time']}")
+                if result['txt_content']:
+                    print(f"文本预览: {result['txt_content'][:200]}...")
+        else:
+            print("未找到记录")
+        return
+    
+    # 检查是否提供了输入路径
+    if not args.input:
+        print("请提供输入文件或目录路径，或使用数据库查询选项")
+        print("使用 --help 查看所有选项")
+        sys.exit(1)
+    
     input_path = Path(args.input)
     
     if input_path.is_file():
         # 分析单个文件
         print(f"分析文件: {input_path}")
-        result = analyzer.analyze_file(input_path)
+        result = analyzer.analyze_file(input_path, force_reanalyze=args.force_reanalyze)
         
         if "error" not in result:
             print(f"题型: {result['question_type']}")
@@ -419,7 +699,7 @@ def main():
     elif input_path.is_dir():
         # 批量分析目录
         print(f"分析目录: {input_path}")
-        results = analyzer.batch_analyze(input_path, args.pattern, args.max_files)
+        results = analyzer.batch_analyze(input_path, args.pattern, args.max_files, args.force_reanalyze)
         
         # 保存结果
         analyzer.save_results(results, args.output)
@@ -432,6 +712,11 @@ def main():
         with open("question_types_summary.txt", 'w', encoding='utf-8') as f:
             f.write(summary)
         print("摘要已保存到: question_types_summary.txt")
+        
+        # 显示数据库统计
+        print("\n=== 数据库统计 ===")
+        db_summary = analyzer.generate_database_summary()
+        print(db_summary)
     
     else:
         print(f"路径不存在: {input_path}")
