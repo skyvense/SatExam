@@ -101,7 +101,8 @@ class OCRProcessor:
             
             # 调用Vision API (支持OpenRouter)
             response = self.client.chat.completions.create(
-                model="anthropic/claude-3-5-sonnet",  # OpenRouter支持的Vision模型
+                #model="anthropic/claude-3-5-sonnet",  # OpenRouter支持的Vision模型
+                model="gpt-4o",
                 messages=[
                     {
                         "role": "user",

@@ -107,7 +107,7 @@ def batch_process_images(api_key: str = None, output_dir: str = "/Volumes/ext/Sa
     
     # 创建OCR处理器
     try:
-        processor = OCRProcessor(api_key=api_key)
+        processor = OCRProcessor(api_key=api_key, base_url="https://api.dotislash.com/v1")
     except Exception as e:
         print(f"❌ 初始化OCR处理器失败: {str(e)}")
         return
