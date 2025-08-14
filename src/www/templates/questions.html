@@ -198,6 +198,79 @@
             color: #333;
         }
         
+        .option-label {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+        }
+        
+        .answer-radio {
+            margin-right: 8px;
+            cursor: pointer;
+        }
+        
+        .answer-actions {
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid #eee;
+        }
+        
+        .check-answer-btn {
+            background: #28a745;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background 0.3s;
+        }
+        
+        .check-answer-btn:hover {
+            background: #218838;
+        }
+        
+        .check-answer-btn:disabled {
+            background: #6c757d;
+            cursor: not-allowed;
+        }
+        
+        .answer-status {
+            margin-top: 10px;
+            padding: 10px;
+            border-radius: 5px;
+            display: none;
+        }
+        
+        .answer-status.loading {
+            display: block;
+            background: #e3f2fd;
+            color: #1976d2;
+        }
+        
+        .answer-status.success {
+            display: block;
+            background: #e8f5e8;
+            color: #2d5a2d;
+        }
+        
+        .answer-status.error {
+            display: block;
+            background: #ffe6e6;
+            color: #d63031;
+        }
+        
+        .ai-analysis {
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 10px;
+            white-space: pre-wrap;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+        
         .question-meta {
             margin-top: 15px;
             padding-top: 10px;
@@ -274,13 +347,16 @@
     <div class="no-print">
         <a href="/" class="back-btn">← 返回首页</a>
         <button onclick="window.print()" class="print-btn">🖨️ 打印/导出PDF</button>
-        <a href="/questions?type={{ question_type }}&limit={{ request.args.get('limit', 10) }}&mode=images&order={{ order }}&start_question={{ start_question }}" class="mode-switch">🖼️ 切换到图片模式</a>
+        <a href="/questions?type={{ question_type }}&limit={{ request.args.get('limit', 10) }}&mode=images&order={{ order }}&start_question={{ start_question }}&exam_name={{ exam_name }}" class="mode-switch">🖼️ 切换到图片模式</a>
     </div>
     
     <div class="header">
         <h1>{{ type_description }}</h1>
         <div class="info">
             共找到 {{ total_count }} 道题目
+            {% if exam_name != '全部' %}
+            | 试卷：{{ exam_name }}
+            {% endif %}
             {% if order == 'time' and start_question > 1 %}
             （从第{{ start_question }}题开始）
             {% endif %}
@@ -297,6 +373,7 @@
                 </div>
                 <div style="text-align: right;">
                     <div>置信度: <span class="confidence">{{ "%.2f"|format(question.confidence) }}</span></div>
+                    <div style="color: #666; font-size: 12px; margin-top: 5px;">{{ question.exam_name }}</div>
                     <a href="#" class="image-link" onclick="showImage('{{ question.file_path.replace('.txt', '.png') }}')">📷 查看原图</a>
                 </div>
             </div>
@@ -310,13 +387,23 @@
                     {% set options = question.options|from_json %}
                     {% for key, value in options.items() %}
                     <div class="option-item">
-                        <span class="option-label">{{ key }}.</span>
+                        <label class="option-label">
+                            <input type="radio" name="answer_{{ question.id }}" value="{{ key }}" class="answer-radio">
+                            {{ key }}.
+                        </label>
                         <span class="option-text">{{ value }}</span>
                     </div>
                     {% endfor %}
                 {% else %}
                     <div class="option-text">{{ question.options }}</div>
                 {% endif %}
+                
+                <div class="answer-actions">
+                    <button class="check-answer-btn" onclick="checkAnswer({{ question.id }})">
+                        🔍 检查答案
+                    </button>
+                    <div class="answer-status" id="status_{{ question.id }}"></div>
+                </div>
             </div>
             {% endif %}
             
@@ -364,6 +451,77 @@
                 closeModal();
             }
         });
+        
+        // 答案检查功能
+        function checkAnswer(questionId) {
+            // 获取用户选择的答案
+            const selectedAnswer = document.querySelector(`input[name="answer_${questionId}"]:checked`);
+            if (!selectedAnswer) {
+                alert('请先选择一个答案！');
+                return;
+            }
+            
+            const userAnswer = selectedAnswer.value;
+            const statusDiv = document.getElementById(`status_${questionId}`);
+            const checkBtn = event.target;
+            
+            // 获取题目内容
+            const questionItem = checkBtn.closest('.question-item');
+            const questionContent = questionItem.querySelector('.question-text').textContent.trim();
+            
+            // 获取选项内容
+            const optionsContainer = questionItem.querySelector('.question-options');
+            const options = {};
+            const optionItems = optionsContainer.querySelectorAll('.option-item');
+            optionItems.forEach(item => {
+                const label = item.querySelector('.option-label');
+                const text = item.querySelector('.option-text');
+                if (label && text) {
+                    const key = label.textContent.trim().replace('.', '');
+                    options[key] = text.textContent.trim();
+                }
+            });
+            
+            // 显示加载状态
+            statusDiv.className = 'answer-status loading';
+            statusDiv.innerHTML = '🤖 AI正在分析答案，请稍候...';
+            checkBtn.disabled = true;
+            checkBtn.textContent = '⏳ 分析中...';
+            
+            // 发送请求到后端
+            fetch('/api/check_answer', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json; charset=utf-8',
+                },
+                body: JSON.stringify({
+                    question_content: questionContent,
+                    options: options,
+                    user_answer: userAnswer
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    statusDiv.className = 'answer-status success';
+                    statusDiv.innerHTML = `
+                        <div style="font-weight: bold; margin-bottom: 10px;">✅ AI分析完成</div>
+                        <div class="ai-analysis">${data.analysis}</div>
+                    `;
+                } else {
+                    statusDiv.className = 'answer-status error';
+                    statusDiv.innerHTML = `❌ 分析失败: ${data.error}`;
+                }
+            })
+            .catch(error => {
+                statusDiv.className = 'answer-status error';
+                statusDiv.innerHTML = `❌ 网络错误: ${error.message}`;
+            })
+            .finally(() => {
+                checkBtn.disabled = false;
+                checkBtn.textContent = '🔍 检查答案';
+            });
+        }
         
         // 图片加载错误处理
         document.addEventListener('DOMContentLoaded', function() {
