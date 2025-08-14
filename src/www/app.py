@@ -62,19 +62,31 @@ def get_question_types():
     
     return results
 
-def get_questions_by_type(question_type, limit=100):
+def get_questions_by_type(question_type, limit=100, order='time', start_question=1):
     """根据题型获取题目"""
     conn = get_db_connection()
     cursor = conn.cursor()
     
-    cursor.execute("""
-        SELECT id, file_path, question_id, question_type, content, options, confidence, add_time
-        FROM questions 
-        WHERE question_type = ? 
-        AND (options IS NOT NULL AND LENGTH(options) >= 10)
-        ORDER BY add_time DESC
-        LIMIT ?
-    """, (question_type, limit))
+    if order == 'random':
+        # 随机排序
+        cursor.execute("""
+            SELECT id, file_path, question_id, question_type, content, options, confidence, add_time
+            FROM questions 
+            WHERE question_type = ? 
+            AND (options IS NOT NULL AND LENGTH(options) >= 10)
+            ORDER BY RANDOM()
+            LIMIT ?
+        """, (question_type, limit))
+    else:
+        # 按时间排序（默认），支持起始位置
+        cursor.execute("""
+            SELECT id, file_path, question_id, question_type, content, options, confidence, add_time
+            FROM questions 
+            WHERE question_type = ? 
+            AND (options IS NOT NULL AND LENGTH(options) >= 10)
+            ORDER BY add_time DESC
+            LIMIT ? OFFSET ?
+        """, (question_type, limit, start_question - 1))
     
     results = cursor.fetchall()
     conn.close()
@@ -92,18 +104,36 @@ def questions():
     """题目展示页面"""
     question_type = request.args.get('type')
     limit = int(request.args.get('limit', 100))
+    mode = request.args.get('mode', 'text')
+    order = request.args.get('order', 'time')
+    start_question = int(request.args.get('start_question', 1))
     
     if not question_type:
         return "请选择题目类型", 400
     
-    questions = get_questions_by_type(question_type, limit)
+    # 如果是随机模式，忽略起始题目参数
+    if order == 'random':
+        start_question = 1
+    
+    questions = get_questions_by_type(question_type, limit, order, start_question)
     type_description = QUESTION_TYPES.get(question_type, question_type)
     
-    return render_template('questions.html', 
-                         questions=questions, 
-                         question_type=question_type,
-                         type_description=type_description,
-                         total_count=len(questions))
+    if mode == 'images':
+        return render_template('questions_images.html', 
+                             questions=questions, 
+                             question_type=question_type,
+                             type_description=type_description,
+                             total_count=len(questions),
+                             order=order,
+                             start_question=start_question)
+    else:
+        return render_template('questions.html', 
+                             questions=questions, 
+                             question_type=question_type,
+                             type_description=type_description,
+                             total_count=len(questions),
+                             order=order,
+                             start_question=start_question)
 
 @app.route('/api/question_types')
 def api_question_types():
@@ -120,11 +150,17 @@ def api_questions():
     """API: 获取题目列表"""
     question_type = request.args.get('type')
     limit = int(request.args.get('limit', 100))
+    order = request.args.get('order', 'time')
+    start_question = int(request.args.get('start_question', 1))
     
     if not question_type:
         return jsonify({'error': '请选择题目类型'}), 400
     
-    questions = get_questions_by_type(question_type, limit)
+    # 如果是随机模式，忽略起始题目参数
+    if order == 'random':
+        start_question = 1
+    
+    questions = get_questions_by_type(question_type, limit, order, start_question)
     
     return jsonify([{
         'id': row['id'],

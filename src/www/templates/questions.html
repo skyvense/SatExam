@@ -94,6 +94,21 @@
             background: #218838;
         }
         
+        .mode-switch {
+            background: #ffc107;
+            color: #333;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            margin-left: 10px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+        
+        .mode-switch:hover {
+            background: #e0a800;
+        }
+        
         .question-item {
             margin-bottom: 30px;
             border: 1px solid #ddd;
@@ -259,12 +274,16 @@
     <div class="no-print">
         <a href="/" class="back-btn">← 返回首页</a>
         <button onclick="window.print()" class="print-btn">🖨️ 打印/导出PDF</button>
+        <a href="/questions?type={{ question_type }}&limit={{ request.args.get('limit', 10) }}&mode=images&order={{ order }}&start_question={{ start_question }}" class="mode-switch">🖼️ 切换到图片模式</a>
     </div>
     
     <div class="header">
         <h1>{{ type_description }}</h1>
         <div class="info">
             共找到 {{ total_count }} 道题目
+            {% if order == 'time' and start_question > 1 %}
+            （从第{{ start_question }}题开始）
+            {% endif %}
         </div>
     </div>
     

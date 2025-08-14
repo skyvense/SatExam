@@ -111,8 +111,32 @@
             
             <div class="form-group">
                 <label for="limit">题目数量：</label>
-                <input type="number" name="limit" id="limit" value="100" min="1" max="1000" required>
+                <input type="number" name="limit" id="limit" value="10" min="1" max="1000" required>
                 <small style="color: #666;">如果总数少于输入数量，将显示全部题目</small>
+            </div>
+            
+            <div class="form-group">
+                <label for="mode">显示模式：</label>
+                <select name="mode" id="mode" required>
+                    <option value="text">📝 文字模式（显示题目文字和选项）</option>
+                    <option value="images">🖼️ 全图片模式（只显示题目图片）</option>
+                </select>
+                <small style="color: #666;">文字模式适合阅读，全图片模式适合快速浏览</small>
+            </div>
+            
+            <div class="form-group">
+                <label for="order">排序模式：</label>
+                <select name="order" id="order" required onchange="toggleStartQuestion()">
+                    <option value="time">📅 按时间顺序（最新优先）</option>
+                    <option value="random">🎲 随机顺序</option>
+                </select>
+                <small style="color: #666;">按时间顺序适合复习，随机顺序适合练习</small>
+            </div>
+            
+            <div class="form-group" id="startQuestionGroup" style="display: none;">
+                <label for="start_question">起始题目：</label>
+                <input type="number" name="start_question" id="start_question" value="1" min="1" required>
+                <small style="color: #666;">从第几道题开始显示（仅在顺序模式下有效）</small>
             </div>
             
             <button type="submit" class="btn">🚀 开始查看题目</button>
@@ -128,5 +152,26 @@
             {% endfor %}
         </div>
     </div>
+    
+    <script>
+        function toggleStartQuestion() {
+            const orderSelect = document.getElementById('order');
+            const startQuestionGroup = document.getElementById('startQuestionGroup');
+            const startQuestionInput = document.getElementById('start_question');
+            
+            if (orderSelect.value === 'time') {
+                startQuestionGroup.style.display = 'block';
+                startQuestionInput.required = true;
+            } else {
+                startQuestionGroup.style.display = 'none';
+                startQuestionInput.required = false;
+            }
+        }
+        
+        // 页面加载时初始化
+        document.addEventListener('DOMContentLoaded', function() {
+            toggleStartQuestion();
+        });
+    </script>
 </body>
 </html>
