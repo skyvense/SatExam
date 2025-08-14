@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SAT题目展示系统</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .container {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            max-width: 600px;
+            width: 100%;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+        }
+        .form-group {
+            margin-bottom: 25px;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #555;
+        }
+        select, input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+        select:focus, input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        .btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 18px;
+            cursor: pointer;
+            width: 100%;
+            transition: transform 0.2s;
+        }
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+        .stats {
+            margin-top: 30px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+        .stats h3 {
+            margin-top: 0;
+            color: #333;
+        }
+        .type-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid #eee;
+        }
+        .type-item:last-child {
+            border-bottom: none;
+        }
+        .type-name {
+            font-weight: 500;
+        }
+        .type-count {
+            color: #667eea;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📚 SAT题目展示系统</h1>
+        
+        <form action="/questions" method="GET">
+            <div class="form-group">
+                <label for="type">选择题目类型：</label>
+                <select name="type" id="type" required>
+                    <option value="">请选择题目类型</option>
+                    {% for row in question_types %}
+                    <option value="{{ row.question_type }}">
+                        {{ type_descriptions.get(row.question_type, row.question_type) }} ({{ row.count }}题)
+                    </option>
+                    {% endfor %}
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="limit">题目数量：</label>
+                <input type="number" name="limit" id="limit" value="100" min="1" max="1000" required>
+                <small style="color: #666;">如果总数少于输入数量，将显示全部题目</small>
+            </div>
+            
+            <button type="submit" class="btn">🚀 开始查看题目</button>
+        </form>
+        
+        <div class="stats">
+            <h3>📊 题型统计</h3>
+            {% for row in question_types %}
+            <div class="type-item">
+                <span class="type-name">{{ type_descriptions.get(row.question_type, row.question_type) }}</span>
+                <span class="type-count">{{ row.count }}题</span>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+</html>

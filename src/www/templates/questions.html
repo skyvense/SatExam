@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ type_description }} - SAT题目展示</title>
+    <!-- MathJax配置 -->
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                processEscapes: true,
+                processEnvironments: true
+            },
+            options: {
+                ignoreHtmlClass: 'tex2jax_ignore',
+                processHtmlClass: 'tex2jax_process'
+            }
+        };
+    </script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    
+    <style>
+        @media print {
+            body { margin: 0; padding: 0; }
+            .no-print { display: none !important; }
+            .question-item { page-break-inside: avoid; margin-bottom: 20px; }
+            .modal { display: none !important; }
+        }
+        
+        body {
+            font-family: 'Times New Roman', serif;
+            margin: 0;
+            padding: 20px;
+            background: white;
+            line-height: 1.6;
+        }
+        
+        .no-print {
+            background: #f5f5f5;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            border-bottom: 2px solid #333;
+            padding-bottom: 15px;
+        }
+        
+        .header h1 {
+            margin: 0 0 10px 0;
+            color: #333;
+            font-size: 24px;
+        }
+        
+        .header .info {
+            color: #666;
+            font-size: 16px;
+        }
+        
+        .back-btn {
+            background: #667eea;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            display: inline-block;
+            margin-bottom: 20px;
+            transition: background 0.3s;
+        }
+        
+        .back-btn:hover {
+            background: #5a6fd8;
+        }
+        
+        .print-btn {
+            background: #28a745;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            margin-left: 10px;
+            cursor: pointer;
+        }
+        
+        .print-btn:hover {
+            background: #218838;
+        }
+        
+        .question-item {
+            margin-bottom: 30px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 20px;
+            background: white;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        .question-header {
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .question-id {
+            font-weight: bold;
+            color: #667eea;
+            font-size: 16px;
+        }
+        
+        .question-type {
+            color: #666;
+            font-size: 14px;
+        }
+        
+        .confidence {
+            background: #e8f5e8;
+            color: #2d5a2d;
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+        
+        .image-link {
+            background: #007bff;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 4px;
+            text-decoration: none;
+            font-size: 12px;
+            margin-left: 10px;
+        }
+        
+        .image-link:hover {
+            background: #0056b3;
+        }
+        
+        .question-text {
+            font-size: 16px;
+            line-height: 1.8;
+            color: #333;
+            margin-bottom: 20px;
+            white-space: pre-wrap;
+        }
+        
+        .question-options {
+            margin-top: 15px;
+        }
+        
+        .options-title {
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+        
+        .option-item {
+            margin-bottom: 8px;
+            padding: 8px;
+            background: #f8f9fa;
+            border-radius: 4px;
+            border-left: 3px solid #667eea;
+        }
+        
+        .option-label {
+            font-weight: bold;
+            color: #667eea;
+            margin-right: 8px;
+        }
+        
+        .option-text {
+            color: #333;
+        }
+        
+        .question-meta {
+            margin-top: 15px;
+            padding-top: 10px;
+            border-top: 1px solid #eee;
+            font-size: 12px;
+            color: #666;
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: #666;
+        }
+        
+        .error {
+            background: #ffe6e6;
+            color: #d63031;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+        
+        /* 模态框样式 */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.8);
+        }
+        
+        .modal-content {
+            margin: auto;
+            display: block;
+            max-width: 90%;
+            max-height: 90%;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        
+        .close {
+            position: absolute;
+            top: 15px;
+            right: 35px;
+            color: #f1f1f1;
+            font-size: 40px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        
+        .close:hover {
+            color: #bbb;
+        }
+        
+        @media (max-width: 768px) {
+            .question-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .image-link {
+                margin-left: 0;
+                margin-top: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="no-print">
+        <a href="/" class="back-btn">← 返回首页</a>
+        <button onclick="window.print()" class="print-btn">🖨️ 打印/导出PDF</button>
+    </div>
+    
+    <div class="header">
+        <h1>{{ type_description }}</h1>
+        <div class="info">
+            共找到 {{ total_count }} 道题目
+        </div>
+    </div>
+    
+    {% if questions %}
+        {% for question in questions %}
+        <div class="question-item">
+            <div class="question-header">
+                <div>
+                    <div class="question-id">题目ID: {{ question.question_id }}</div>
+                    <div class="question-type">题型: {{ type_description }}</div>
+                </div>
+                <div style="text-align: right;">
+                    <div>置信度: <span class="confidence">{{ "%.2f"|format(question.confidence) }}</span></div>
+                    <a href="#" class="image-link" onclick="showImage('{{ question.file_path.replace('.txt', '.png') }}')">📷 查看原图</a>
+                </div>
+            </div>
+            
+            <div class="question-text">{{ question.content }}</div>
+            
+            {% if question.options %}
+            <div class="question-options">
+                <div class="options-title">选项：</div>
+                {% if question.options.startswith('{') %}
+                    {% set options = question.options|from_json %}
+                    {% for key, value in options.items() %}
+                    <div class="option-item">
+                        <span class="option-label">{{ key }}.</span>
+                        <span class="option-text">{{ value }}</span>
+                    </div>
+                    {% endfor %}
+                {% else %}
+                    <div class="option-text">{{ question.options }}</div>
+                {% endif %}
+            </div>
+            {% endif %}
+            
+            <div class="question-meta">
+                添加时间: {{ question.add_time[:10] }} | 文件: {{ question.file_path }}
+            </div>
+        </div>
+        {% endfor %}
+    {% else %}
+    <div class="loading">
+        <h3>没有找到相关题目</h3>
+        <p>请尝试选择其他题型或调整数量限制</p>
+    </div>
+    {% endif %}
+    
+    <!-- 图片模态框 -->
+    <div id="imageModal" class="modal">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <img class="modal-content" id="modalImage">
+    </div>
+    
+    <script>
+        // 图片模态框功能
+        function showImage(imagePath) {
+            const modal = document.getElementById('imageModal');
+            const modalImg = document.getElementById('modalImage');
+            modal.style.display = "block";
+            modalImg.src = "/static/images/" + imagePath;
+        }
+        
+        function closeModal() {
+            document.getElementById('imageModal').style.display = "none";
+        }
+        
+        // 点击模态框背景关闭
+        document.getElementById('imageModal').onclick = function(e) {
+            if (e.target === this) {
+                closeModal();
+            }
+        };
+        
+        // ESC键关闭模态框
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeModal();
+            }
+        });
+        
+        // 图片加载错误处理
+        document.addEventListener('DOMContentLoaded', function() {
+            // MathJax会在页面加载完成后自动渲染数学公式
+            console.log('页面加载完成，MathJax将自动渲染数学公式');
+        });
+    </script>
+</body>
+</html>
