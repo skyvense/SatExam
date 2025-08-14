@@ -1,1080 +1,134 @@
 [
   {
     "filename": "001.txt",
-    "filepath": "/Volumes/ext/SatExams/data/output/12月7日北美A卷/001.txt",
+    "filepath": "/Volumes/ext/SatExams/data/output/北美24年5月-- Reading & Writing  Module 2  3--14题/001.txt",
     "question_type": "writing-lang-words-in-context",
-    "confidence": 1.0,
+    "confidence": 0.95,
     "scores": {
       "writing-lang-words-in-context": 10
     },
-    "text_preview": "Question 1:\n\nThe National Heritage Fellowship was created to honor exceptional folk and traditional artists in the United States. One artist who received the fellowship is Navajo (Diné) basket weaver ...",
-    "source": "type_file"
+    "text_preview": "Although the literary works of David Malo and Lee Cataluna have universal appeal, they are also _____ the Hawaiian literary tradition in which both authors work and that stretches back to the traditio...",
+    "source": "ai_analysis"
   },
   {
     "filename": "002.txt",
-    "filepath": "/Volumes/ext/SatExams/data/output/12月7日北美A卷/002.txt",
-    "question_type": "reading-words-in-context",
-    "confidence": 1.0,
+    "filepath": "/Volumes/ext/SatExams/data/output/北美24年5月-- Reading & Writing  Module 2  3--14题/002.txt",
+    "question_type": "reading-command-of-evidence",
+    "confidence": 0.95,
     "scores": {
-      "reading-words-in-context": 10
+      "reading-command-of-evidence": 10
     },
-    "text_preview": "Let me transcribe all the text content from this SAT question:\n\nIntroduction text:\nThe following text is from Kenneth Grahame's 1908 novel The Wind in the Willows. The Mole is returning home after a v...",
-    "source": "type_file"
+    "text_preview": "The following text is from Anne Spencer's 1922 poem \"Translation.\"\n\nWe trekked into a far country,\nMy friend and I.\nOur deeper content was never spoken,\nBut each knew all the other said.\nHe told me ho...",
+    "source": "ai_analysis"
   },
   {
     "filename": "003.txt",
-    "filepath": "/Volumes/ext/SatExams/data/output/12月7日北美A卷/003.txt",
+    "filepath": "/Volumes/ext/SatExams/data/output/北美24年5月-- Reading & Writing  Module 2  3--14题/003.txt",
     "question_type": "reading-command-of-evidence",
-    "confidence": 1.0,
+    "confidence": 0.95,
     "scores": {
       "reading-command-of-evidence": 10
     },
-    "text_preview": "Question 15:\n\nPassage:\nThe olona shrub is one of many forest plant species native to Oahu (a Hawaiian island) that are at risk of extinction. The survival of most of these species in the wild largely ...",
-    "source": "type_file"
+    "text_preview": "Like all species of baleen whales, the common minke whale feeds on tiny creatures known as krill by filtering water through bristlelike keratin structures called baleen plates. In this way, baleen wha...",
+    "source": "ai_analysis"
   },
   {
     "filename": "004.txt",
-    "filepath": "/Volumes/ext/SatExams/data/output/12月7日北美A卷/004.txt",
-    "question_type": "writing-lang-grammar",
-    "confidence": 1.0,
+    "filepath": "/Volumes/ext/SatExams/data/output/北美24年5月-- Reading & Writing  Module 2  3--14题/004.txt",
+    "question_type": "math-problem-solving-data-analysis",
+    "confidence": 0.95,
     "scores": {
-      "writing-lang-grammar": 10
+      "math-problem-solving-data-analysis": 10
     },
-    "text_preview": "Question 16:\n\nText passage:\n\"The human body has three types of muscle ____, cardiac, and skeletal. The levator anguli oris is a skeletal muscle—of which the body contains more than six hundred—and it ...",
-    "source": "type_file"
+    "text_preview": "Days per Winter That Lakes Have Surface Ice\n\nLake\tLatitude (degrees)\t1980–81\t1985–86\t1990–91\t1995–96\t2000–01\t2005–06\nOulujärvi\t64.3\t194\t184\t190\t192\t139\t155\nLake Neusiedl\t47.82\t77\t86\t87\t128\t50\t104\nMirr...",
+    "source": "ai_analysis"
   },
   {
     "filename": "005.txt",
-    "filepath": "/Volumes/ext/SatExams/data/output/12月7日北美A卷/005.txt",
-    "question_type": "writing-lang-grammar",
-    "confidence": 1.0,
+    "filepath": "/Volumes/ext/SatExams/data/output/北美24年5月-- Reading & Writing  Module 2  3--14题/005.txt",
+    "question_type": "reading-command-of-evidence",
+    "confidence": 0.95,
     "scores": {
-      "writing-lang-grammar": 10
+      "reading-command-of-evidence": 10
     },
-    "text_preview": "Question 17:\n\nSentence with blank:\n\"Alabama resident Benjamin S. Turner, sworn in as a member of the US House of Representatives in 1871, was one of the nearly two thousand African _____ during the de...",
-    "source": "type_file"
+    "text_preview": "[REDACTED] assembled a database of materials used in consumer electronics by studying products in the lab and by gathering data from similar product studies. The team gave each of these studies a rati...",
+    "source": "ai_analysis"
   },
   {
     "filename": "006.txt",
-    "filepath": "/Volumes/ext/SatExams/data/output/12月7日北美A卷/006.txt",
-    "question_type": "writing-lang-grammar",
-    "confidence": 1.0,
-    "scores": {
-      "writing-lang-grammar": 10
-    },
-    "text_preview": "Question 19:\n\nOriginal text:\n\"The programming languages COBOL, developed by Grace Hopper in developed by Rich Hickey in 2007, are all routinely translated into executable code by tools known as compil...",
-    "source": "type_file"
-  },
-  {
-    "filename": "007.txt",
-    "filepath": "/Volumes/ext/SatExams/data/output/12月7日北美A卷/007.txt",
-    "question_type": "writing-lang-grammar",
-    "confidence": 1.0,
-    "scores": {
-      "writing-lang-grammar": 10
-    },
-    "text_preview": "Question 20:\n\nText passage:\n\"Proto-Kru is a protolanguage, or a hypothesized ancestral language, of all the Kru languages (thirty-eight languages that, because ___ descendants of Proto-Kru, can provid...",
-    "source": "type_file"
-  },
-  {
-    "filename": "008.txt",
-    "filepath": "/Volumes/ext/SatExams/data/output/12月7日北美A卷/008.txt",
-    "question_type": "writing-lang-expression-of-ideas",
-    "confidence": 1.0,
-    "scores": {
-      "writing-lang-expression-of-ideas": 10
-    },
-    "text_preview": "Question 21:\n\nPassage:\nThough Middle English was widely spoken in fourteenth-century England, the English language was rarely employed in literature until poet Geoffrey Chaucer pioneered its literary ...",
-    "source": "type_file"
-  },
-  {
-    "filename": "009.txt",
-    "filepath": "/Volumes/ext/SatExams/data/output/12月7日北美A卷/009.txt",
-    "question_type": "writing-lang-expression-of-ideas",
-    "confidence": 1.0,
-    "scores": {
-      "writing-lang-expression-of-ideas": 10
-    },
-    "text_preview": "Question 22:\n\nIn skateboarding, the 900—a trick in which the skateboarder spins two and a half times in midair—is so rare that every successful execution of it is a historic occasion. _____ ever since...",
-    "source": "type_file"
-  },
-  {
-    "filename": "010.txt",
-    "filepath": "/Volumes/ext/SatExams/data/output/12月7日北美A卷/010.txt",
-    "question_type": "writing-lang-expression-of-ideas",
-    "confidence": 1.0,
-    "scores": {
-      "writing-lang-expression-of-ideas": 10
-    },
-    "text_preview": "Question 22:\n\nText passage:\nIn skateboarding, the 900—a trick in which the skateboarder spins two and a half times in midair—is so rare that every successful execution of it is a historic occasion. __...",
-    "source": "type_file"
-  },
-  {
-    "filename": "011.txt",
-    "filepath": "/Volumes/ext/SatExams/data/output/12月7日北美A卷/011.txt",
-    "question_type": "writing-lang-expression-of-ideas",
-    "confidence": 0.95,
-    "scores": {
-      "writing-lang-expression-of-ideas": 10
-    },
-    "text_preview": "Question 23:\n\nText passage:\nVisually distinguishing the common raven (Corvus corax) from the Chihuahuan raven (Corvus cryptoleucus) can confound even seasoned bird watchers. _____ the two species shar...",
-    "source": "ai_analysis"
-  },
-  {
-    "filename": "012.txt",
-    "filepath": "/Volumes/ext/SatExams/data/output/12月7日北美A卷/012.txt",
-    "question_type": "writing-lang-command-of-evidence",
-    "confidence": 0.95,
-    "scores": {
-      "writing-lang-command-of-evidence": 10
-    },
-    "text_preview": "Question 24:\n\nNotes shown:\n• Elizabeth Catlett (1915-2012) was a celebrated African American artist.\n• She is best known for creating sculptures and prints that explore the Black experience.\n• Mahalia...",
-    "source": "ai_analysis"
-  },
-  {
-    "filename": "013.txt",
-    "filepath": "/Volumes/ext/SatExams/data/output/12月7日北美A卷/013.txt",
-    "question_type": "writing-lang-command-of-evidence",
-    "confidence": 0.95,
-    "scores": {
-      "writing-lang-command-of-evidence": 10
-    },
-    "text_preview": "Question 25:\n\nNotes provided:\n• Lighthouses send out crucial light signals to help ships and other watercraft navigate at night.\n• Before automation, lighthouses were run by lighthouse keepers.\n• Kate...",
-    "source": "ai_analysis"
-  },
-  {
-    "filename": "014.txt",
-    "filepath": "/Volumes/ext/SatExams/data/output/12月7日北美A卷/014.txt",
-    "question_type": "writing-lang-command-of-evidence",
-    "confidence": 1.0,
-    "scores": {
-      "writing-lang-command-of-evidence": 10
-    },
-    "text_preview": "Question 26:\n\nGiven text:\n• The University of Oslo in Oslo, Norway, is home to a Foucault pendulum.\n• The pendulum consists of a weighted ball that swings at the end of a roughly 14-meter-long cable.\n...",
-    "source": "type_file"
-  },
-  {
-    "filename": "015.txt",
-    "filepath": "/Volumes/ext/SatExams/data/output/12月7日北美A卷/015.txt",
-    "question_type": "writing-lang-command-of-evidence",
-    "confidence": 1.0,
-    "scores": {
-      "writing-lang-command-of-evidence": 10
-    },
-    "text_preview": "Question 27 (Mark for Review)\n\nNotes provided:\n• Mauritania is a country in North Africa.\n• A high percentage of Mauritania's population (39.9 percent) is under fifteen years old.\n• It has the thirty-...",
-    "source": "type_file"
-  },
-  {
-    "filename": "016.txt",
-    "filepath": "/Volumes/ext/SatExams/data/output/12月7日北美A卷/016.txt",
-    "question_type": "writing-lang-expression-of-ideas",
-    "confidence": 1.0,
-    "scores": {
-      "writing-lang-expression-of-ideas": 10
-    },
-    "text_preview": "Let me transcribe the text and question from this SAT exam image:\n\nPassage text:\n\"A microgenre is a specialized genre consisting of a comparatively small number of stylistically similar artists. The m...",
-    "source": "type_file"
-  },
-  {
-    "filename": "017.txt",
-    "filepath": "/Volumes/ext/SatExams/data/output/12月7日北美A卷/017.txt",
-    "question_type": "writing-lang-words-in-context",
-    "confidence": 1.0,
-    "scores": {
-      "writing-lang-words-in-context": 10
-    },
-    "text_preview": "Question 4:\n\nSentence:\nThe Fly River delta is a remarkably ____ landscape: it is a constantly evolving network of channels and strips of land that change in size and shape as the river deposits new se...",
-    "source": "type_file"
-  },
-  {
-    "filename": "018.txt",
-    "filepath": "/Volumes/ext/SatExams/data/output/12月7日北美A卷/018.txt",
-    "question_type": "writing-lang-command-of-evidence",
-    "confidence": 0.95,
-    "scores": {
-      "writing-lang-command-of-evidence": 10
-    },
-    "text_preview": "Question 6:\n\nCuttlefish and toads see in three dimensions (3D) by combining two images in their brains, one from each eye. This produces a sense of depth, helping the animals judge how close or far aw...",
-    "source": "ai_analysis"
-  },
-  {
-    "filename": "019.txt",
-    "filepath": "/Volumes/ext/SatExams/data/output/12月7日北美A卷/019.txt",
-    "question_type": "reading-command-of-evidence",
-    "confidence": 0.95,
-    "scores": {
-      "reading-command-of-evidence": 10
-    },
-    "text_preview": "Let me transcribe all the text content from this SAT question:\n\nQuestion 7 (Mark for Review)\n\nBased on the texts, the author of Text 2 would most likely agree with which statement about the \"Gondwanan...",
-    "source": "ai_analysis"
-  },
-  {
-    "filename": "020.txt",
-    "filepath": "/Volumes/ext/SatExams/data/output/12月7日北美A卷/020.txt",
-    "question_type": "reading-command-of-evidence",
-    "confidence": 0.95,
-    "scores": {
-      "reading-command-of-evidence": 10
-    },
-    "text_preview": "Let me transcribe all the text content from this SAT question:\n\nQuestion 8 (Mark for Review)\n\nText 1:\nAccording to a study by a conservation group representing 11 tribal nations in the Great Lakes reg...",
-    "source": "ai_analysis"
-  },
-  {
-    "filename": "021.txt",
-    "filepath": "/Volumes/ext/SatExams/data/output/12月7日北美A卷/021.txt",
-    "question_type": "reading-command-of-evidence",
-    "confidence": 0.95,
-    "scores": {
-      "reading-command-of-evidence": 10
-    },
-    "text_preview": "Let me transcribe the text from this SAT question:\n\nQuestion 13 (Mark for Review)\n\nPassage:\nHypothesizing that lullabies, characterized by their slow tempos, are universally calming to infants, Consta...",
-    "source": "ai_analysis"
-  },
-  {
-    "filename": "022.txt",
-    "filepath": "/Volumes/ext/SatExams/data/output/12月7日北美A卷/022.txt",
-    "question_type": "writing-lang-command-of-evidence",
-    "confidence": 0.95,
-    "scores": {
-      "writing-lang-command-of-evidence": 10
-    },
-    "text_preview": "Let me help identify all the text content from this SAT question:\n\nQuestion 14 (Mark for Review)\n\nTitle: Composition and Fracture Toughness of Five HEAs\n\nTable Headers:\n- HEA identification number\n- C...",
-    "source": "ai_analysis"
-  },
-  {
-    "filename": "023.txt",
-    "filepath": "/Volumes/ext/SatExams/data/output/12月7日北美A卷/023.txt",
+    "filepath": "/Volumes/ext/SatExams/data/output/北美24年5月-- Reading & Writing  Module 2  3--14题/006.txt",
     "question_type": "reading-evidence",
     "confidence": 0.95,
     "scores": {
       "reading-evidence": 10
     },
-    "text_preview": "Question 12:\n\nContext: \"A Pair of Silk Stockings\" is an 1897 short story written by Kate Chopin. In the story, Mrs. Sommers attends a play, which she experiences as a temporary escape from the circums...",
+    "text_preview": "Scholars cite One Hundred Years of Solitude, the 1967 novel by Colombian author Gabriel García Márquez, as a foundational text of magical realism, the Latin American style of fiction in which antireal...",
     "source": "ai_analysis"
   },
   {
-    "filename": "024.txt",
-    "filepath": "/Volumes/ext/SatExams/data/output/12月7日北美A卷/024.txt",
+    "filename": "007.txt",
+    "filepath": "/Volumes/ext/SatExams/data/output/北美24年5月-- Reading & Writing  Module 2  3--14题/007.txt",
     "question_type": "reading-command-of-evidence",
     "confidence": 0.95,
     "scores": {
       "reading-command-of-evidence": 10
     },
-    "text_preview": "Let me transcribe all the text content from this SAT question:\n\n[Passage]\nThe following text is from Julia Alvarez's 2000 novel In the Name of Salomé. Salomé, a poet, is hosting guests in the front pa...",
+    "text_preview": "Nella Larsen's 1928 novel Quicksand is regularly described as autobiographical. That characterization is apt—there are many parallels between the experiences of the novel's protagonist, Helga Crane, a...",
     "source": "ai_analysis"
   },
   {
-    "filename": "025.txt",
-    "filepath": "/Volumes/ext/SatExams/data/output/12月7日北美A卷/025.txt",
-    "question_type": "math-problem-solving-data-analysis",
-    "confidence": 0.95,
-    "scores": {
-      "math-problem-solving-data-analysis": 10
-    },
-    "text_preview": "Let me transcribe all the text content from this SAT question:\n\nTitle: Effect of Neighboring Species on Pollinator Visits to Target Species\n\nTable contents:\n| Neighboring species | Target species | Ef...",
-    "source": "ai_analysis"
-  },
-  {
-    "filename": "026.txt",
-    "filepath": "/Volumes/ext/SatExams/data/output/12月7日北美A卷/026.txt",
-    "question_type": "writing-lang-words-in-context",
-    "confidence": 0.95,
-    "scores": {
-      "writing-lang-words-in-context": 10
-    },
-    "text_preview": "Question 1:\n\nText passage:\n\"Jessica Watson, who was the youngest person to sail nonstop and unassisted around the world, undoubtedly accomplished much, but to gain a lasting place in our historical me...",
-    "source": "ai_analysis"
-  },
-  {
-    "filename": "027.txt",
-    "filepath": "/Volumes/ext/SatExams/data/output/12月7日北美A卷/027.txt",
-    "question_type": "writing-lang-words-in-context",
-    "confidence": 0.95,
-    "scores": {
-      "writing-lang-words-in-context": 10
-    },
-    "text_preview": "Section 1, Module 2: Reading and Writing\n\nQuestion 3 (Mark for Review)\n\nText:\nIn the mid-1980s, the price of vintage and even new baseball cards rose dramatically, which had the counterintuitive effec...",
-    "source": "ai_analysis"
-  },
-  {
-    "filename": "028.txt",
-    "filepath": "/Volumes/ext/SatExams/data/output/12月7日北美A卷/028.txt",
-    "question_type": "writing-lang-words-in-context",
-    "confidence": 1.0,
-    "scores": {
-      "writing-lang-words-in-context": 10
-    },
-    "text_preview": "Question 4:\n\nThe fact that publications by University of California-Berkeley economist Bronwyn Hughes Hall, who studies innovation and economics, are so frequently cited in other scholars' work _____ ...",
-    "source": "type_file"
-  },
-  {
-    "filename": "029.txt",
-    "filepath": "/Volumes/ext/SatExams/data/output/12月7日北美A卷/029.txt",
-    "question_type": "reading-command-of-evidence",
-    "confidence": 1.0,
-    "scores": {
-      "reading-command-of-evidence": 10
-    },
-    "text_preview": "Question 5:\n\nPassage text:\nShedding light on the thermal biology of fungi, research by Radamés Cordero et al. indicates that certain mushrooms (including Boletus separans and species from the genus Th...",
-    "source": "type_file"
-  },
-  {
-    "filename": "030.txt",
-    "filepath": "/Volumes/ext/SatExams/data/output/12月7日北美A卷/030.txt",
+    "filename": "008.txt",
+    "filepath": "/Volumes/ext/SatExams/data/output/北美24年5月-- Reading & Writing  Module 2  3--14题/008.txt",
     "question_type": "reading-command-of-evidence",
     "confidence": 0.95,
     "scores": {
       "reading-command-of-evidence": 10
     },
-    "text_preview": "Let me transcribe the text from this SAT question:\n\nQuestion:\nWhich choice best describes the function of the information about Grenada in the text as a whole?\n\nContext text:\nIn Grenada, use of solid ...",
+    "text_preview": "Many contemporary Indigenous painters practice a specifically Indigenous mode of abstraction; for example, Linda Lomahaftewa often assembles compositions out of motifs common in the ceramics and other...",
     "source": "ai_analysis"
   },
   {
-    "filename": "031.txt",
-    "filepath": "/Volumes/ext/SatExams/data/output/12月7日北美A卷/031.txt",
-    "question_type": "reading-command-of-evidence",
-    "confidence": 0.95,
-    "scores": {
-      "reading-command-of-evidence": 10
-    },
-    "text_preview": "Question 7:\n\nPassage text:\nIn a study by Mika R. Moran, Daniel A. Rodriguez, and colleagues, residents of Quito, Ecuador, and Lima, Peru, were surveyed about parks in their cities. Of the 618 responde...",
-    "source": "ai_analysis"
-  },
-  {
-    "filename": "032.txt",
-    "filepath": "/Volumes/ext/SatExams/data/output/12月7日北美A卷/032.txt",
-    "question_type": "reading-command-of-evidence",
-    "confidence": 0.95,
-    "scores": {
-      "reading-command-of-evidence": 10
-    },
-    "text_preview": "Question 8:\n\nThe bird species Schistocichla leucostigma (the spot-winged antbird) shares some territory in French Guiana with Thamnomanes caesius (the cinereous antshrike), which emits a loud alarm ca...",
-    "source": "ai_analysis"
-  },
-  {
-    "filename": "033.txt",
-    "filepath": "/Volumes/ext/SatExams/data/output/12月7日北美A卷/033.txt",
-    "question_type": "math-problem-solving-data-analysis",
-    "confidence": 0.95,
-    "scores": {
-      "math-problem-solving-data-analysis": 10
-    },
-    "text_preview": "Let me help you identify all the text content from this SAT question image:\n\nQuestion 10 (Mark for Review)\n\nTitle: Correlation between Model-Predicted and Participant-Reported Enjoyment Ratings, by Pa...",
-    "source": "ai_analysis"
-  },
-  {
-    "filename": "034.txt",
-    "filepath": "/Volumes/ext/SatExams/data/output/12月7日北美A卷/034.txt",
-    "question_type": "reading-command-of-evidence",
-    "confidence": 0.95,
-    "scores": {
-      "reading-command-of-evidence": 10
-    },
-    "text_preview": "Question 9:\n\nBased on the text, which potential study design would be most likely to produce evidence that would enable Grasby et al. to answer their research question?\n\nA) Have a representative sampl...",
-    "source": "ai_analysis"
-  },
-  {
-    "filename": "035.txt",
-    "filepath": "/Volumes/ext/SatExams/data/output/12月7日北美A卷/035.txt",
-    "question_type": "reading-command-of-evidence",
-    "confidence": 0.95,
-    "scores": {
-      "reading-command-of-evidence": 10
-    },
-    "text_preview": "Question 11:\n\nMany studies have found a positive association between levels of dissolved organic carbon and mercury in bodies of fresh water in North America. But Petri Porvari and Matti Verta did not...",
-    "source": "ai_analysis"
-  },
-  {
-    "filename": "036.txt",
-    "filepath": "/Volumes/ext/SatExams/data/output/12月7日北美A卷/036.txt",
-    "question_type": "reading-command-of-evidence",
-    "confidence": 0.95,
-    "scores": {
-      "reading-command-of-evidence": 10
-    },
-    "text_preview": "Question 12:\n\nPassage text:\nChelsea Wood et al. tracked temperature-driven changes in the abundance of Anisakis sp. (a complex life cycle parasite, or CLP, that requires three host species throughout ...",
-    "source": "ai_analysis"
-  },
-  {
-    "filename": "037.txt",
-    "filepath": "/Volumes/ext/SatExams/data/output/12月7日北美A卷/037.txt",
-    "question_type": "reading-command-of-evidence",
-    "confidence": 0.95,
-    "scores": {
-      "reading-command-of-evidence": 10
-    },
-    "text_preview": "Question 13:\n\nMain text:\nProlonged exposure to anthropogenic noise (sounds from human sources like traffic or mining) can affect animals, as Amy Morris-Drake and colleagues found in a 2017 study of dw...",
-    "source": "ai_analysis"
-  },
-  {
-    "filename": "038.txt",
-    "filepath": "/Volumes/ext/SatExams/data/output/12月7日北美A卷/038.txt",
-    "question_type": "reading-command-of-evidence",
-    "confidence": 0.95,
-    "scores": {
-      "reading-command-of-evidence": 10
-    },
-    "text_preview": "Question 13:\n\nPassage:\nProlonged exposure to anthropogenic noise (sounds from human sources like traffic or mining) can affect animals, as Amy Morris-Drake and colleagues found in a 2017 study of dwar...",
-    "source": "ai_analysis"
-  },
-  {
-    "filename": "039.txt",
-    "filepath": "/Volumes/ext/SatExams/data/output/12月7日北美A卷/039.txt",
+    "filename": "009.txt",
+    "filepath": "/Volumes/ext/SatExams/data/output/北美24年5月-- Reading & Writing  Module 2  3--14题/009.txt",
     "question_type": "writing-lang-grammar",
     "confidence": 0.95,
     "scores": {
       "writing-lang-grammar": 10
     },
-    "text_preview": "Question 14:\n\nAlthough the epic poem The Aeneid dates back to the 1st century BCE, ___ compelling narrative still captivates readers today.\n\nWhich choice completes the text so that it conforms to the ...",
+    "text_preview": "Included in Graphic Witness, a 2017 group exhibition at the Drawing Room in London, United Kingdom, was the work of multimedia artist Lorna Simpson. The impact of Simpson's work is _____ the horizons ...",
     "source": "ai_analysis"
   },
   {
-    "filename": "040.txt",
-    "filepath": "/Volumes/ext/SatExams/data/output/12月7日北美A卷/040.txt",
-    "question_type": "writing-lang-grammar",
+    "filename": "010.txt",
+    "filepath": "/Volumes/ext/SatExams/data/output/北美24年5月-- Reading & Writing  Module 2  3--14题/010.txt",
+    "question_type": "reading-command-of-evidence",
     "confidence": 0.95,
     "scores": {
-      "writing-lang-grammar": 10
+      "reading-command-of-evidence": 10
     },
-    "text_preview": "Question 15:\n\nMost sand is beige because of deposits of gray- and tan-hued minerals, such as quartz and feldspar. The sand at Les Sables Roses Beach in French Polynesia is a more unusual _______ depos...",
+    "text_preview": "Optimal foraging theory (OFT) holds that animals' foraging behaviors reflect cost-benefit\ntrade-offs that vary by species and with dynamic ecological circumstances. One such\ncircumstance is lunar inte...",
     "source": "ai_analysis"
   },
   {
-    "filename": "041.txt",
-    "filepath": "/Volumes/ext/SatExams/data/output/12月7日北美A卷/041.txt",
-    "question_type": "writing-lang-grammar",
-    "confidence": 0.95,
+    "filename": "011.txt",
+    "filepath": "/Volumes/ext/SatExams/data/output/北美24年5月-- Reading & Writing  Module 2  3--14题/011.txt",
+    "question_type": "reading-evidence",
+    "confidence": 0,
     "scores": {
-      "writing-lang-grammar": 10
+      "reading-evidence": 0,
+      "reading-words-in-context": 0,
+      "reading-command-of-evidence": 0,
+      "writing-lang-expression-of-ideas": 0,
+      "writing-lang-grammar": 0,
+      "writing-lang-command-of-evidence": 0,
+      "writing-lang-words-in-context": 0,
+      "math-heart-of-algebra": 0,
+      "math-problem-solving-data-analysis": 0,
+      "math-passport-to-advanced-math": 0,
+      "math-additional-topics": 0,
+      "essay-analysis": 0
     },
-    "text_preview": "Question 16:\n\nThe poem \"The Ballad of Rudolph Reed,\" which was published in 1960, contains three signature elements of Gwendolyn Brooks's poetic _____ compressed lines infused with bursts of vivid ima...",
+    "text_preview": "No text detected in the image.",
     "source": "ai_analysis"
-  },
-  {
-    "filename": "042.txt",
-    "filepath": "/Volumes/ext/SatExams/data/output/12月7日北美A卷/042.txt",
-    "question_type": "writing-lang-grammar",
-    "confidence": 0.95,
-    "scores": {
-      "writing-lang-grammar": 10
-    },
-    "text_preview": "Question 17:\n\nText passage:\n\"Neoclassical economic models assume that people consistently make rational economic decisions, but Francesca Gino of Harvard Business School makes no such assumption; beha...",
-    "source": "ai_analysis"
-  },
-  {
-    "filename": "043.txt",
-    "filepath": "/Volumes/ext/SatExams/data/output/12月7日北美A卷/043.txt",
-    "question_type": "writing-lang-grammar",
-    "confidence": 0.95,
-    "scores": {
-      "writing-lang-grammar": 10
-    },
-    "text_preview": "Question 18:\n\nMain text:\nWhile the greater adjutant (Leptoptilos dubius) can be found in places like Dong Khanthung in Laos and Chitwan National Park in Nepal, more than 80 percent of this endangered ...",
-    "source": "ai_analysis"
-  },
-  {
-    "filename": "044.txt",
-    "filepath": "/Volumes/ext/SatExams/data/output/12月7日北美A卷/044.txt",
-    "question_type": "writing-lang-grammar",
-    "confidence": 0.95,
-    "scores": {
-      "writing-lang-grammar": 10
-    },
-    "text_preview": "Question 19:\n\nThe story of Chile's electrification is perhaps most readily understood by studying developments in several key years: 1916, when engineer Arturo Salazar attended the Pan-American Scient...",
-    "source": "ai_analysis"
-  },
-  {
-    "filename": "045.txt",
-    "filepath": "/Volumes/ext/SatExams/data/output/12月7日北美A卷/045.txt",
-    "question_type": "writing-lang-grammar",
-    "confidence": 0.95,
-    "scores": {
-      "writing-lang-grammar": 10
-    },
-    "text_preview": "Question 20:\n\nThe Greek dramatist Euripides's Cyclops, a satyr play, is an extant work: it can still be read. By contrast, lost works like Euripides's play about the hero Alcmaeon, Alcmaeon in Psophis...",
-    "source": "ai_analysis"
-  },
-  {
-    "filename": "046.txt",
-    "filepath": "/Volumes/ext/SatExams/data/output/12月7日北美A卷/046.txt",
-    "question_type": "writing-lang-expression-of-ideas",
-    "confidence": 0.95,
-    "scores": {
-      "writing-lang-expression-of-ideas": 10
-    },
-    "text_preview": "Question 21:\n\nPassage text:\nLong thought to be sessile (immobile), adult Chelonibia testudinaria, barnacles that adhere to sea turtle shells, have been observed to shift slightly in position over time...",
-    "source": "ai_analysis"
-  },
-  {
-    "filename": "047.txt",
-    "filepath": "/Volumes/ext/SatExams/data/output/12月7日北美A卷/047.txt",
-    "question_type": "writing-lang-expression-of-ideas",
-    "confidence": 0.95,
-    "scores": {
-      "writing-lang-expression-of-ideas": 10
-    },
-    "text_preview": "Question 22:\n\nMarcia Rieke is a space scientist who works on the James Webb Space Telescope, or JWST. Thanks in part to Rieke's contributions, the telescope is now positioned near the Sun-Earth L₂ Lag...",
-    "source": "ai_analysis"
-  },
-  {
-    "filename": "048.txt",
-    "filepath": "/Volumes/ext/SatExams/data/output/12月7日北美A卷/048.txt",
-    "question_type": "writing-lang-expression-of-ideas",
-    "confidence": 1.0,
-    "scores": {
-      "writing-lang-expression-of-ideas": 10
-    },
-    "text_preview": "Question 23:\n\nText passage:\n\"Photogrammetry and polygonal modeling, methods used by digital artists to create three-dimensional elements for video games, typically require software to process geometri...",
-    "source": "type_file"
-  },
-  {
-    "filename": "049.txt",
-    "filepath": "/Volumes/ext/SatExams/data/output/12月7日北美A卷/049.txt",
-    "question_type": "writing-lang-expression-of-ideas",
-    "confidence": 1.0,
-    "scores": {
-      "writing-lang-expression-of-ideas": 10
-    },
-    "text_preview": "Question 24:\n\nText passage:\nThe total solar eclipse of June 5, 762 BCE, was the second-longest total eclipse before the Dark Ages—7 minutes, 25 seconds long. Another memorable solar eclipse occurred o...",
-    "source": "type_file"
-  },
-  {
-    "filename": "050.txt",
-    "filepath": "/Volumes/ext/SatExams/data/output/12月7日北美A卷/050.txt",
-    "question_type": "writing-lang-expression-of-ideas",
-    "confidence": 0.95,
-    "scores": {
-      "writing-lang-expression-of-ideas": 10
-    },
-    "text_preview": "Question 25:\n\nStudent's Notes:\n• The Coachella Valley National Wildlife Refuge (NWR) is a protected natural area in California.\n• It encompasses 3,592 acres.\n• It was established to safeguard the habi...",
-    "source": "ai_analysis"
-  },
-  {
-    "filename": "051.txt",
-    "filepath": "/Volumes/ext/SatExams/data/output/12月7日北美A卷/051.txt",
-    "question_type": "writing-lang-command-of-evidence",
-    "confidence": 0.95,
-    "scores": {
-      "writing-lang-command-of-evidence": 10
-    },
-    "text_preview": "Question 26:\n\nStudent's Notes:\n• Antelope House is an Ancestral Puebloan dwelling site located in northeastern Arizona.\n• It was built under a rock overhang and inhabited from approximately 1050-1270 ...",
-    "source": "ai_analysis"
-  },
-  {
-    "filename": "052.txt",
-    "filepath": "/Volumes/ext/SatExams/data/output/12月7日北美A卷/052.txt",
-    "question_type": "writing-lang-command-of-evidence",
-    "confidence": 0.95,
-    "scores": {
-      "writing-lang-command-of-evidence": 10
-    },
-    "text_preview": "Question 27\n\nStudent's Notes:\n• Kepler's first law of planetary motion states that the orbit of a planet around the Sun is an ellipse.\n• The law also states that, in an elliptical orbit, the object be...",
-    "source": "ai_analysis"
-  },
-  {
-    "filename": "053.txt",
-    "filepath": "/Volumes/ext/SatExams/data/output/12月7日北美A卷/053.txt",
-    "question_type": "math-heart-of-algebra",
-    "confidence": 0.95,
-    "scores": {
-      "math-heart-of-algebra": 10
-    },
-    "text_preview": "Question 2:\nWhich expression is equivalent to 13(x² - 7)?\n\nA) 13x² - 91\nB) 13x² - 20\nC) 13x² - 7\nD) 13x² + 6\n\n[Mark for Review option available in top right corner]",
-    "source": "ai_analysis"
-  },
-  {
-    "filename": "054.txt",
-    "filepath": "/Volumes/ext/SatExams/data/output/12月7日北美A卷/054.txt",
-    "question_type": "math-problem-solving-data-analysis",
-    "confidence": 0.95,
-    "scores": {
-      "math-problem-solving-data-analysis": 10
-    },
-    "text_preview": "Question 4:\n\nA sleep study consisted of 53 participants, of which 50 participants each had an average of more than 120 minutes of rapid eye movement (REM) sleep per night. If a participant from this s...",
-    "source": "ai_analysis"
-  },
-  {
-    "filename": "055.txt",
-    "filepath": "/Volumes/ext/SatExams/data/output/12月7日北美A卷/055.txt",
-    "question_type": "math-problem-solving-data-analysis",
-    "confidence": 0.95,
-    "scores": {
-      "math-problem-solving-data-analysis": 10
-    },
-    "text_preview": "Question 5:\n\nThe question shows a table with wind chill temperatures at different wind speeds:\n\nAir temperature | Wind chill temperature at wind | Wind chill temperature at wind\n                | spee...",
-    "source": "ai_analysis"
-  },
-  {
-    "filename": "056.txt",
-    "filepath": "/Volumes/ext/SatExams/data/output/12月7日北美A卷/056.txt",
-    "question_type": "math-heart-of-algebra",
-    "confidence": 0.95,
-    "scores": {
-      "math-heart-of-algebra": 10
-    },
-    "text_preview": "Question 6:\n\nA soccer team's goal is to earn at least $1,320 by selling coupon books. The team earns $12 from selling each coupon book. Which of the following inequalities describes all possible value...",
-    "source": "ai_analysis"
-  },
-  {
-    "filename": "057.txt",
-    "filepath": "/Volumes/ext/SatExams/data/output/12月7日北美A卷/057.txt",
-    "question_type": "math-heart-of-algebra",
-    "confidence": 0.95,
-    "scores": {
-      "math-heart-of-algebra": 10
-    },
-    "text_preview": "Question 7:\n\n2.5c + 5d = 60\n\nThe given equation describes the relationship between the number of cats, c, and the number of dogs, d, that can be cared for at a pet care business during a week. If the ...",
-    "source": "ai_analysis"
-  },
-  {
-    "filename": "058.txt",
-    "filepath": "/Volumes/ext/SatExams/data/output/12月7日北美A卷/058.txt",
-    "question_type": "math-heart-of-algebra",
-    "confidence": 1.0,
-    "scores": {
-      "math-heart-of-algebra": 10
-    },
-    "text_preview": "Question 8:\n\nEquation: $-(3x-7)^2 = p+17$\n\nIn the given equation, p is an integer constant. The equation has no real solution. What is the least possible value of p?\n\nA) -18\nB) -17\nC) -16\nD) -15\n\nThe ...",
-    "source": "type_file"
-  },
-  {
-    "filename": "059.txt",
-    "filepath": "/Volumes/ext/SatExams/data/output/12月7日北美A卷/059.txt",
-    "question_type": "math-additional-topics",
-    "confidence": 1.0,
-    "scores": {
-      "math-additional-topics": 10
-    },
-    "text_preview": "Question 9:\n\nNote: Figures not drawn to scale.\n\nFor the triangles shown, triangle ABC is dilated by a scale factor of 5 to obtain triangle XYZ, where d = 10. What is the measure, in degrees, of angle ...",
-    "source": "type_file"
-  },
-  {
-    "filename": "060.txt",
-    "filepath": "/Volumes/ext/SatExams/data/output/12月7日北美A卷/060.txt",
-    "question_type": "math-additional-topics",
-    "confidence": 1.0,
-    "scores": {
-      "math-additional-topics": 10
-    },
-    "text_preview": "Question 11:\n\nNote: Figure not drawn to scale.\n\nThe area of triangle ABC is 220 square centimeters. What is the height h, in centimeters, of this triangle?\n\nA) 10\nB) 22\nC) 44\nD) 88\n\n[The figure shows ...",
-    "source": "type_file"
-  },
-  {
-    "filename": "061.txt",
-    "filepath": "/Volumes/ext/SatExams/data/output/12月7日北美A卷/061.txt",
-    "question_type": "math-heart-of-algebra",
-    "confidence": 1.0,
-    "scores": {
-      "math-heart-of-algebra": 10
-    },
-    "text_preview": "Question 12:\n\nIn the right triangle shown, the value of tan x° is 39/40. What is the value of x?\n\nNote: Figure not drawn to scale.\n\n[Right triangle shown with height 39 and base 40]\n\nA) 79\nB) 40\nC) 39...",
-    "source": "type_file"
-  },
-  {
-    "filename": "062.txt",
-    "filepath": "/Volumes/ext/SatExams/data/output/12月7日北美A卷/062.txt",
-    "question_type": "math-passport-to-advanced-math",
-    "confidence": 1.0,
-    "scores": {
-      "math-passport-to-advanced-math": 10
-    },
-    "text_preview": "Question 13:\n\nThe graph of the polynomial function f in the xy-plane, where y = f(x), has x-intercepts of (-5, 0) and (6, 0). Which of the following must be true?\n\nA) f(0) = -5\nB) f(6) = -5\nC) f(-5) =...",
-    "source": "type_file"
-  },
-  {
-    "filename": "063.txt",
-    "filepath": "/Volumes/ext/SatExams/data/output/12月7日北美A卷/063.txt",
-    "question_type": "math-heart-of-algebra",
-    "confidence": 1.0,
-    "scores": {
-      "math-heart-of-algebra": 10
-    },
-    "text_preview": "Question 14:\n\n$(x - 16)(x - 10)(x + 7)(x + 17) = 0$\n\nWhat is a positive solution to the given equation?\n\nAnswer box shows: 10\nAnswer Preview: 10\n\nThe image also shows student-produced response directi...",
-    "source": "type_file"
-  },
-  {
-    "filename": "064.txt",
-    "filepath": "/Volumes/ext/SatExams/data/output/12月7日北美A卷/064.txt",
-    "question_type": "math-additional-topics",
-    "confidence": 1.0,
-    "scores": {
-      "math-additional-topics": 10
-    },
-    "text_preview": "Question 16:\n\nIn the xy-plane, the graph of the equation $(x - 6)^2 + (y - 2)^2 = 36$ is a circle. The point $(12, c)$, where $c$ is a constant, lies on this circle. What is the value of $c$?\n\nThis is...",
-    "source": "type_file"
-  },
-  {
-    "filename": "065.txt",
-    "filepath": "/Volumes/ext/SatExams/data/output/12月7日北美A卷/065.txt",
-    "question_type": "math-additional-topics",
-    "confidence": 1.0,
-    "scores": {
-      "math-additional-topics": 10
-    },
-    "text_preview": "Question 16:\n\nIn the xy-plane, the graph of the equation (x - 6)² + (y - c)² = 36 is a circle. The point (12, c), where c is a constant, lies on this circle. What is the value of c?\n\n[Answer box provi...",
-    "source": "type_file"
-  },
-  {
-    "filename": "066.txt",
-    "filepath": "/Volumes/ext/SatExams/data/output/12月7日北美A卷/066.txt",
-    "question_type": "math-heart-of-algebra",
-    "confidence": 1.0,
-    "scores": {
-      "math-heart-of-algebra": 10
-    },
-    "text_preview": "Question 17:\n\n6(x - 4) = (x - 4) + 6\n\nIf x is the solution to the given equation, what is the value of x - 4?\n\nStudent-produced response directions:\n- If you find more than one correct answer, enter o...",
-    "source": "type_file"
-  },
-  {
-    "filename": "067.txt",
-    "filepath": "/Volumes/ext/SatExams/data/output/12月7日北美A卷/067.txt",
-    "question_type": "math-heart-of-algebra",
-    "confidence": 1.0,
-    "scores": {
-      "math-heart-of-algebra": 10
-    },
-    "text_preview": "Question 18:\n\nSystem of equations:\n\\[\\frac{1}{4}x + 2y = 17\\]\n\\[\\frac{3}{4}x + 2y = 15\\]\n\nThe solution to the given system of equations is (x, y). What is the value of \\[\\frac{11}{4}x + 6y?\\]\n\nA) 4\nB)...",
-    "source": "type_file"
-  },
-  {
-    "filename": "068.txt",
-    "filepath": "/Volumes/ext/SatExams/data/output/12月7日北美A卷/068.txt",
-    "question_type": "math-passport-to-advanced-math",
-    "confidence": 0.95,
-    "scores": {
-      "math-passport-to-advanced-math": 10
-    },
-    "text_preview": "Question 19:\n\nThe function h is defined by h(x) = 14(2)^(-x) + 7. What is the value of h(3)?\n\nA) 42\nB) 35/4\nC) -77\nD) -105\n\n[Mark for Review]",
-    "source": "ai_analysis"
-  },
-  {
-    "filename": "069.txt",
-    "filepath": "/Volumes/ext/SatExams/data/output/12月7日北美A卷/069.txt",
-    "question_type": "math-heart-of-algebra",
-    "confidence": 0.95,
-    "scores": {
-      "math-heart-of-algebra": 10
-    },
-    "text_preview": "Let me transcribe all the text content from this SAT question:\n\nQuestion 20 (Mark for Review)\n\nThe graph of a line in the xy-plane passes through the point (1, 8) and crosses the x-axis at the point (...",
-    "source": "ai_analysis"
-  },
-  {
-    "filename": "070.txt",
-    "filepath": "/Volumes/ext/SatExams/data/output/12月7日北美A卷/070.txt",
-    "question_type": "math-heart-of-algebra",
-    "confidence": 1.0,
-    "scores": {
-      "math-heart-of-algebra": 10
-    },
-    "text_preview": "Let me help identify all the text content from this SAT question image:\n\nQuestion 21 (Mark for Review)\n\nTable contents:\n| x | y |\n|-2 | 19|\n| 0 | 31|\n| 2 | 43|\n\nQuestion text:\nThe table shows three va...",
-    "source": "type_file"
-  },
-  {
-    "filename": "071.txt",
-    "filepath": "/Volumes/ext/SatExams/data/output/12月7日北美A卷/071.txt",
-    "question_type": "math-heart-of-algebra",
-    "confidence": 1.0,
-    "scores": {
-      "math-heart-of-algebra": 10
-    },
-    "text_preview": "Question 22:\n\nSystem of equations:\n5x + 8y = 9\n15x + 24y = 27\n\nFor each real number r, which of the following points lies on the graph of each equation in the xy-plane for the given system?\n\nA) (r, -5...",
-    "source": "type_file"
-  },
-  {
-    "filename": "072.txt",
-    "filepath": "/Volumes/ext/SatExams/data/output/12月7日北美A卷/072.txt",
-    "question_type": "math-problem-solving-data-analysis",
-    "confidence": 1.0,
-    "scores": {
-      "math-problem-solving-data-analysis": 10
-    },
-    "text_preview": "Question 1 (Mark for Review)\n\nJulia purchased 800 feet of fencing. She used 60% of this fencing to surround a vegetable garden. How many feet of fencing did Julia use to surround the vegetable garden?...",
-    "source": "type_file"
-  },
-  {
-    "filename": "073.txt",
-    "filepath": "/Volumes/ext/SatExams/data/output/12月7日北美A卷/073.txt",
-    "question_type": "math-problem-solving-data-analysis",
-    "confidence": 1.0,
-    "scores": {
-      "math-problem-solving-data-analysis": 10
-    },
-    "text_preview": "Question 3:\n\nGiven data: 1, 4, 7, 10, 33\n\nWhat is the mean of the data shown?\n\nA) 7\nB) 11\nC) 17\nD) 33\n\nThe question appears to be marked for review (indicated by the bookmark icon at the top).",
-    "source": "type_file"
-  },
-  {
-    "filename": "074.txt",
-    "filepath": "/Volumes/ext/SatExams/data/output/12月7日北美A卷/074.txt",
-    "question_type": "math-heart-of-algebra",
-    "confidence": 1.0,
-    "scores": {
-      "math-heart-of-algebra": 10
-    },
-    "text_preview": "Question 8:\n\nEquation: $-(3x - 7)^2 = p + 17$\n\nIn the given equation, p is an integer constant. The equation has no real solution. What is the least possible value of p?\n\nA) -18\nB) -17\nC) -16\nD) -15\n\n...",
-    "source": "type_file"
-  },
-  {
-    "filename": "075.txt",
-    "filepath": "/Volumes/ext/SatExams/data/output/12月7日北美A卷/075.txt",
-    "question_type": "math-heart-of-algebra",
-    "confidence": 1.0,
-    "scores": {
-      "math-heart-of-algebra": 10
-    },
-    "text_preview": "Question 10 (Mark for Review)\n\nWhat is the y-intercept of the graph of y = 16^(x+3) in the xy-plane?\n\nA) (0, 4,096)\nB) (0, 0)\nC) (0, 16)\nD) (0, 3)",
-    "source": "type_file"
-  },
-  {
-    "filename": "076.txt",
-    "filepath": "/Volumes/ext/SatExams/data/output/12月7日北美A卷/076.txt",
-    "question_type": "math-heart-of-algebra",
-    "confidence": 1.0,
-    "scores": {
-      "math-heart-of-algebra": 10
-    },
-    "text_preview": "Question 21:\n\nThe table shows three values of x and their corresponding values of y:\n\n| x | y |\n|-2 | 19|\n| 0 | 31|\n| 2 | 43|\n\nThe linear relationship between x and y can be represented by an equation...",
-    "source": "type_file"
-  },
-  {
-    "filename": "077.txt",
-    "filepath": "/Volumes/ext/SatExams/data/output/12月7日北美A卷/077.txt",
-    "question_type": "math-heart-of-algebra",
-    "confidence": 1.0,
-    "scores": {
-      "math-heart-of-algebra": 10
-    },
-    "text_preview": "Question 1:\nThe function g is defined by g(x) = -18 - 9x. For what value of x does g(x) = -216?\n\nAnswer choices:\nA) -26\nB) 22\nC) 26\nD) 1,926\n\nThe text appears at the top of the image with \"Mark for Re...",
-    "source": "type_file"
-  },
-  {
-    "filename": "078.txt",
-    "filepath": "/Volumes/ext/SatExams/data/output/12月7日北美A卷/078.txt",
-    "question_type": "math-heart-of-algebra",
-    "confidence": 0.95,
-    "scores": {
-      "math-heart-of-algebra": 10
-    },
-    "text_preview": "Question 2:\n\nThe population of a certain city doubled every 25 years from 1660 to 1760. The population of this city was 208,000 in 1760. What was the population of this city in 1660?\n\nA) 13,000\nB) 26,...",
-    "source": "ai_analysis"
-  },
-  {
-    "filename": "079.txt",
-    "filepath": "/Volumes/ext/SatExams/data/output/12月7日北美A卷/079.txt",
-    "question_type": "math-heart-of-algebra",
-    "confidence": 0.95,
-    "scores": {
-      "math-heart-of-algebra": 10
-    },
-    "text_preview": "Question 6:\nHow many solutions does the equation 7x - 19 = 19 - 7x have?\n\nA) Zero\nB) Exactly one\nC) Exactly two\nD) Infinitely many\n\nThe question appears to be from an SAT test, with a \"Mark for Review...",
-    "source": "ai_analysis"
-  },
-  {
-    "filename": "080.txt",
-    "filepath": "/Volumes/ext/SatExams/data/output/12月7日北美A卷/080.txt",
-    "question_type": "math-heart-of-algebra",
-    "confidence": 0.95,
-    "scores": {
-      "math-heart-of-algebra": 10
-    },
-    "text_preview": "Question 7:\n\ny > x1\n-4x + y < 21\n\nThe point (x, 54) is a solution to the given system of inequalities in the xy-plane. Which of the following could be the value of x?\n\nA) 9\nB) 5\nC) -5\nD) -9",
-    "source": "ai_analysis"
-  },
-  {
-    "filename": "081.txt",
-    "filepath": "/Volumes/ext/SatExams/data/output/12月7日北美A卷/081.txt",
-    "question_type": "math-heart-of-algebra",
-    "confidence": 0.95,
-    "scores": {
-      "math-heart-of-algebra": 10
-    },
-    "text_preview": "Question 8:\n\nA linear function f gives a company's profit, in dollars, for selling x items. The company's profit is $190 when it sells 4 items, and its profit is $670 when it sells 10 items. Which equ...",
-    "source": "ai_analysis"
-  },
-  {
-    "filename": "082.txt",
-    "filepath": "/Volumes/ext/SatExams/data/output/12月7日北美A卷/082.txt",
-    "question_type": "math-passport-to-advanced-math",
-    "confidence": 0.95,
-    "scores": {
-      "math-passport-to-advanced-math": 10
-    },
-    "text_preview": "Question 9:\nWhich quadratic equation has no real solutions?\n\nA) -2x² = 0\nB) -2x² + 2 = 0\nC) -2x² + 2x = 0\nD) -2x² + 2x - 2 = 0\n\nThe text appears to be from an SAT test question, with a \"Mark for Revie...",
-    "source": "ai_analysis"
-  },
-  {
-    "filename": "083.txt",
-    "filepath": "/Volumes/ext/SatExams/data/output/12月7日北美A卷/083.txt",
-    "question_type": "math-additional-topics",
-    "confidence": 0.95,
-    "scores": {
-      "math-additional-topics": 10
-    },
-    "text_preview": "Question 10:\n\nThe circumference of the base of a right circular cylinder is 6π meters, and the height of the cylinder is 19 meters. What is the volume, in cubic meters, of the cylinder?\n\nA) 57π\nB) 114...",
-    "source": "ai_analysis"
-  },
-  {
-    "filename": "084.txt",
-    "filepath": "/Volumes/ext/SatExams/data/output/12月7日北美A卷/084.txt",
-    "question_type": "math-problem-solving-data-analysis",
-    "confidence": 0.95,
-    "scores": {
-      "math-problem-solving-data-analysis": 10
-    },
-    "text_preview": "我看到图片中显示了4个不同的频率分布表，标记为A、B、C、D。每个表格都有两列：\n\"Number of eggs\"（鸡蛋数量）和\"Frequency\"（频率）。\n\n表格内容如下：\n\n表格 A:\nNumber of eggs | Frequency\n6 | 4\n7 | 8\n8 | 8\n9 | 6\n10 | 6\n\n表格 B:\nNumber of eggs | Frequency\n6 | 3\n7 | 6...",
-    "source": "ai_analysis"
-  },
-  {
-    "filename": "085.txt",
-    "filepath": "/Volumes/ext/SatExams/data/output/12月7日北美A卷/085.txt",
-    "question_type": "math-heart-of-algebra",
-    "confidence": 0.95,
-    "scores": {
-      "math-heart-of-algebra": 10
-    },
-    "text_preview": "Question 12:\n\nA carnival receives $10 for each adult admission ticket sold and $5 for each child admission ticket sold. On a particular day, the carnival received a total of $4,100 from selling adult ...",
-    "source": "ai_analysis"
-  },
-  {
-    "filename": "086.txt",
-    "filepath": "/Volumes/ext/SatExams/data/output/12月7日北美A卷/086.txt",
-    "question_type": "math-heart-of-algebra",
-    "confidence": 0.95,
-    "scores": {
-      "math-heart-of-algebra": 10
-    },
-    "text_preview": "Question 13:\n\nSystem of equations:\ny = x - 0.2\ny = x² - 30x\n\nThe graphs of the equations in the given system intersect at the point (x, y) in the xy-plane. What is a possible value of y?\n\nA) 32\nB) 33\n...",
-    "source": "ai_analysis"
-  },
-  {
-    "filename": "087.txt",
-    "filepath": "/Volumes/ext/SatExams/data/output/12月7日北美A卷/087.txt",
-    "question_type": "math-heart-of-algebra",
-    "confidence": 0.95,
-    "scores": {
-      "math-heart-of-algebra": 10
-    },
-    "text_preview": "Let me transcribe the text content from this SAT question image:\n\nQuestion 14 (Mark for Review)\n\nStudent-produced response directions:\n\nThe function c(r) = 2/3(2πr) gives the partial length in centime...",
-    "source": "ai_analysis"
-  },
-  {
-    "filename": "088.txt",
-    "filepath": "/Volumes/ext/SatExams/data/output/12月7日北美A卷/088.txt",
-    "question_type": "math-passport-to-advanced-math",
-    "confidence": 1.0,
-    "scores": {
-      "math-passport-to-advanced-math": 10
-    },
-    "text_preview": "Question 15:\n\n$f(x) = 25(1.40)^{\\frac{x}{6}}$\n\nFor the given function f, the value of f(x) increases by p% for every increase of x by 6.\nWhat is the value of p?\n\nA) 40\nB) 49\nC) 80\nD) 96\n\n[Mark for Rev...",
-    "source": "type_file"
-  },
-  {
-    "filename": "089.txt",
-    "filepath": "/Volumes/ext/SatExams/data/output/12月7日北美A卷/089.txt",
-    "question_type": "math-heart-of-algebra",
-    "confidence": 1.0,
-    "scores": {
-      "math-heart-of-algebra": 10
-    },
-    "text_preview": "Question 16:\n\nThe function k is defined by k(s) = √s + 110. If k(53p) = p, where p is a constant, what is the value of p?\n\nStudent-produced response directions:\n- If you find more than one correct ans...",
-    "source": "type_file"
-  },
-  {
-    "filename": "090.txt",
-    "filepath": "/Volumes/ext/SatExams/data/output/12月7日北美A卷/090.txt",
-    "question_type": "math-passport-to-advanced-math",
-    "confidence": 0.95,
-    "scores": {
-      "math-passport-to-advanced-math": 10
-    },
-    "text_preview": "Question 18:\n\nA computer program models the population of a certain insect in an environment where the insect has no natural predators. According to the model, the estimated total mass of the populati...",
-    "source": "ai_analysis"
-  },
-  {
-    "filename": "091.txt",
-    "filepath": "/Volumes/ext/SatExams/data/output/12月7日北美A卷/091.txt",
-    "question_type": "math-problem-solving-data-analysis",
-    "confidence": 0.95,
-    "scores": {
-      "math-problem-solving-data-analysis": 10
-    },
-    "text_preview": "Question 19:\n\nThe value of an autographed baseball increased by 178% from the end of 2012 to the end of 2013 and then decreased by 21% from the end of 2013 to the end of 2014. What was the net percent...",
-    "source": "ai_analysis"
-  },
-  {
-    "filename": "092.txt",
-    "filepath": "/Volumes/ext/SatExams/data/output/12月7日北美A卷/092.txt",
-    "question_type": "math-passport-to-advanced-math",
-    "confidence": 0.95,
-    "scores": {
-      "math-passport-to-advanced-math": 10
-    },
-    "text_preview": "Let me help identify all the text content in this SAT question image:\n\nQuestion 20 (Mark for Review):\nIf n and k are numbers greater than 1 and √n^a is equivalent to √k^2, for what value of a is n^(2a...",
-    "source": "ai_analysis"
-  },
-  {
-    "filename": "093.txt",
-    "filepath": "/Volumes/ext/SatExams/data/output/12月7日北美A卷/093.txt",
-    "question_type": "math-additional-topics",
-    "confidence": 0.95,
-    "scores": {
-      "math-additional-topics": 10
-    },
-    "text_preview": "Question 21:\n\nThe image shows a right triangle ABC with:\n- A hypotenuse length of 28 units marked\n- A right angle at B\n- A note stating \"Figure not drawn to scale\"\n\nProblem text:\nFor triangle ABC, the...",
-    "source": "ai_analysis"
-  },
-  {
-    "filename": "094.txt",
-    "filepath": "/Volumes/ext/SatExams/data/output/12月7日北美A卷/094.txt",
-    "question_type": "math-problem-solving-data-analysis",
-    "confidence": 0.95,
-    "scores": {
-      "math-problem-solving-data-analysis": 10
-    },
-    "text_preview": "Question 22:\n\nThe area of a rectangular region is increasing at a rate of 280 square feet per hour. Which of the following is closest to this rate in square meters per minute? (Use 1 meter = 3.28 feet...",
-    "source": "ai_analysis"
-  },
-  {
-    "filename": "095.txt",
-    "filepath": "/Volumes/ext/SatExams/data/output/12月7日北美A卷/095.txt",
-    "question_type": "math-problem-solving-data-analysis",
-    "confidence": 0.95,
-    "scores": {
-      "math-problem-solving-data-analysis": 10
-    },
-    "text_preview": "Question 3:\n\nThe function f(x) = 600(0.5)^(x/11) gives the predicted intensity of a beam f(x), in number of photons in the beam, x millimeters below the surface of a certain material. What is the best...",
-    "source": "ai_analysis"
-  },
-  {
-    "filename": "096.txt",
-    "filepath": "/Volumes/ext/SatExams/data/output/12月7日北美A卷/096.txt",
-    "question_type": "math-heart-of-algebra",
-    "confidence": 0.95,
-    "scores": {
-      "math-heart-of-algebra": 10
-    },
-    "text_preview": "For the linear function h, h(0) = 0 and h(11) = 5. Which equation defines h?\n\nA) h(x) = 5/11 x\n\nB) h(x) = 5/11 x + 5\n\nC) h(x) = 11/5 x\n\nD) h(x) = 11/5 x + 11\n\nThe text appears to be a multiple choice ...",
-    "source": "ai_analysis"
-  },
-  {
-    "filename": "097.txt",
-    "filepath": "/Volumes/ext/SatExams/data/output/12月7日北美A卷/097.txt",
-    "question_type": "math-heart-of-algebra",
-    "confidence": 0.95,
-    "scores": {
-      "math-heart-of-algebra": 10
-    },
-    "text_preview": "Question 5:\n\nHassan put up wire fencing along each edge of a rectangular garden with a length of x feet and a width of y feet. Hassan put up a total length of 44 feet of wire fencing. Which equation r...",
-    "source": "ai_analysis"
-  },
-  {
-    "filename": "098.txt",
-    "filepath": "/Volumes/ext/SatExams/data/output/12月7日北美A卷/098.txt",
-    "question_type": "math-passport-to-advanced-math",
-    "confidence": 1.0,
-    "scores": {
-      "math-passport-to-advanced-math": 10
-    },
-    "text_preview": "Let me help identify all the text content from this SAT question image:\n\nQuestion 17:\nIf 121x² = -110x + 56, what is the value of 11x + 5, where 11x + 5 > 0?\n\nStudent-produced response directions:\n• I...",
-    "source": "type_file"
   }
 ]

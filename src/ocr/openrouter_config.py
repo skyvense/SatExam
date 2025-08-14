@@ -12,7 +12,7 @@ def setup_openrouter():
     """设置OpenRouter配置"""
     
     # 方法1: 环境变量设置
-    os.environ['OPENROUTER_API_KEY'] = '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'
+    os.environ['OPENROUTER_API_KEY'] = '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'
     
     # 方法2: 直接创建客户端
     processor = OCRProcessor(

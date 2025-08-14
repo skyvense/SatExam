@@ -2,79 +2,68 @@
 """
 批量OCR处理脚本
 处理所有图片文件，将每页转换为文本文件
+支持并行处理以提高效率
 """
 
 import os
 import sys
 import time
+import threading
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
 from typing import List, Tuple
 
 from ocr import OCRProcessor
 
 
-def get_all_image_files(output_dir: str = "/Volumes/ext/SatExams/data/output", target_dir: str = None) -> List[Tuple[Path, Path]]:
-    """
-    获取所有需要处理的图片文件
+def get_all_image_files(output_dir: str, target_dir: str = None) -> List[Tuple[Path, Path]]:
+    """获取所有需要处理的图片文件"""
+    output_path = Path(output_dir)
     
-    Args:
-        output_dir: 输出根目录
-        target_dir: 指定要处理的子目录（可选），支持绝对路径（以/开头）
+    if not output_path.exists():
+        raise FileNotFoundError(f"输出目录不存在: {output_dir}")
     
-    Returns:
-        图片文件路径和对应输出文本文件路径的列表
-    """
-    image_files = []
-    
-    if target_dir and target_dir.startswith('/'):
-        # 处理绝对路径
-        target_path = Path(target_dir)
-        if not target_path.exists():
-            print(f"指定目录不存在: {target_path}")
-            return []
-        
-        # 查找PNG文件
-        for png_file in target_path.glob("*.png"):
-            # 生成对应的文本文件路径
-            text_file = target_path / f"{png_file.stem}.txt"
-            image_files.append((png_file, text_file))
-    else:
-        # 处理相对路径（作为output_dir的子目录）
-        output_path = Path(output_dir)
-        
-        if not output_path.exists():
-            print(f"输出目录不存在: {output_dir}")
-            return []
-        
-        if target_dir:
-            # 处理指定子目录
-            target_path = output_path / target_dir
-            if not target_path.exists():
-                print(f"指定目录不存在: {target_path}")
-                return []
-            
-            # 查找PNG文件
-            for png_file in target_path.glob("*.png"):
-                # 生成对应的文本文件路径
-                text_file = target_path / f"{png_file.stem}.txt"
-                image_files.append((png_file, text_file))
+    # 确定搜索目录
+    if target_dir:
+        if target_dir.startswith('/'):
+            # 绝对路径
+            search_dir = Path(target_dir)
         else:
-            # 遍历所有子目录
-            for subdir in output_path.iterdir():
-                if not subdir.is_dir():
-                    continue
-                    
-                # 查找PNG文件
-                for png_file in subdir.glob("*.png"):
-                    # 生成对应的文本文件路径
-                    text_file = subdir / f"{png_file.stem}.txt"
-                    image_files.append((png_file, text_file))
+            # 相对路径，作为output_dir的子目录
+            search_dir = output_path / target_dir
+    else:
+        search_dir = output_path
     
-    return sorted(image_files)
+    if not search_dir.exists():
+        raise FileNotFoundError(f"指定目录不存在: {search_dir}")
+    
+    # 支持的图片格式
+    image_extensions = {'.png', '.jpg', '.jpeg', '.bmp', '.tiff', '.webp'}
+    
+    # 获取所有图片文件
+    image_files = []
+    for image_path in search_dir.rglob('*'):
+        # 过滤条件：
+        # 1. 必须是文件
+        # 2. 必须是支持的图片格式
+        # 3. 不能是系统文件（以._开头）
+        # 4. 不能是隐藏文件（以.开头但不是图片格式）
+        if (image_path.is_file() and 
+            image_path.suffix.lower() in image_extensions and
+            not image_path.name.startswith('._') and
+            not image_path.name.startswith('.')):
+            
+            # 生成对应的文本文件路径
+            text_path = image_path.with_suffix('.txt')
+            image_files.append((image_path, text_path))
+    
+    return sorted(image_files, key=lambda x: x[0].name)
 
 
 def batch_process_images(api_key: str = None, output_dir: str = "/Volumes/ext/SatExams/data/output", 
-                        target_dir: str = None, max_files: int = None, start_from: int = 0) -> None:
+                        target_dir: str = None, max_files: int = None, start_from: int = 0, 
+                        max_workers: int = 10, max_retries: int = 3, timeout: int = 60, 
+                        backoff_factor: float = 2.0) -> None:
     """批量处理图片文件"""
     
     print("=== 批量OCR处理 ===")
@@ -84,6 +73,8 @@ def batch_process_images(api_key: str = None, output_dir: str = "/Volumes/ext/Sa
     if max_files:
         print(f"最大处理文件数: {max_files}")
     print(f"起始位置: {start_from}")
+    print(f"并行度: {max_workers}")
+    print(f"重试设置: 最大{max_retries}次, 超时{timeout}秒, 退避因子{backoff_factor}")
     print()
     
     # 获取所有图片文件
@@ -107,7 +98,7 @@ def batch_process_images(api_key: str = None, output_dir: str = "/Volumes/ext/Sa
     
     # 创建OCR处理器
     try:
-        processor = OCRProcessor(api_key=api_key, base_url="https://api.dotislash.com/v1")
+        processor = OCRProcessor(api_key=api_key)
     except Exception as e:
         print(f"❌ 初始化OCR处理器失败: {str(e)}")
         return
@@ -120,45 +111,57 @@ def batch_process_images(api_key: str = None, output_dir: str = "/Volumes/ext/Sa
     # 开始处理
     start_time = time.time()
     
-    for i, (image_path, text_path) in enumerate(files_to_process, start=1):
-        current_index = start_from + i
-        
-        # 检查是否已经处理过
-        if text_path.exists() and text_path.stat().st_size > 0:
-            print(f"[{current_index}/{total_files}] 跳过: {image_path.name} (已存在)")
-            success_count += 1
-            continue
-        
-        print(f"[{current_index}/{total_files}] 处理: {image_path.name}")
-        print(f"  输入路径: {image_path}")
-        print(f"  输出路径: {text_path}")
-        
-        # 处理文件
-        try:
-            success = processor.process_image(image_path, text_path, language="English")
-            
-            if success:
-                print(f"  ✅ 成功: {text_path.name}")
+    # 使用线程池进行并行处理
+    with ThreadPoolExecutor(max_workers=max_workers) as executor:
+        # 提交所有任务
+        future_to_file = {}
+        for i, (image_path, text_path) in enumerate(files_to_process):
+            # 检查是否已经处理过
+            if text_path.exists() and text_path.stat().st_size > 0:
+                print(f"[{start_from + i + 1}/{total_files}] 跳过: {image_path.name} (已存在)")
                 success_count += 1
-            else:
-                print(f"  ❌ 失败")
-                failed_count += 1
-                failed_files.append(image_path.name)
+                continue
+            
+            # 提交处理任务（包含重试参数）
+            future = executor.submit(
+                processor.process_image,
+                image_path,
+                text_path,
+                language="English",
+                max_retries=max_retries,
+                timeout=timeout,
+                backoff_factor=backoff_factor
+            )
+            future_to_file[future] = (i + 1, image_path.name)
+        
+        # 处理完成的任务
+        for future in as_completed(future_to_file):
+            index, image_name = future_to_file[future]
+            current_index = start_from + index
+            
+            try:
+                success = future.result()
                 
-        except Exception as e:
-            print(f"  ❌ 异常: {str(e)}")
-            failed_count += 1
-            failed_files.append(image_path.name)
-        
-        # 显示进度
-        elapsed = time.time() - start_time
-        avg_time = elapsed / i
-        remaining = avg_time * (len(files_to_process) - i)
-        print(f"  进度: {i}/{len(files_to_process)} | 已用时间: {elapsed:.1f}s | 预计剩余: {remaining:.1f}s")
-        print()
-        
-        # 添加延迟避免API限制
-        time.sleep(1)
+                if success:
+                    print(f"[{current_index}/{total_files}] ✅ 成功: {image_name}")
+                    success_count += 1
+                else:
+                    print(f"[{current_index}/{total_files}] ❌ 失败: {image_name}")
+                    failed_count += 1
+                    failed_files.append(image_name)
+            except Exception as e:
+                print(f"[{current_index}/{total_files}] ❌ 异常: {str(e)} - {image_name}")
+                failed_count += 1
+                failed_files.append(image_name)
+            
+            # 显示进度
+            completed = success_count + failed_count
+            if completed > 0:
+                elapsed = time.time() - start_time
+                avg_time = elapsed / completed
+                remaining = avg_time * (len(files_to_process) - completed)
+                print(f"  进度: {completed}/{len(files_to_process)} | 已用时间: {elapsed:.1f}s | 预计剩余: {remaining:.1f}s")
+                print()
     
     # 显示最终结果
     total_time = time.time() - start_time
@@ -192,6 +195,16 @@ def main():
                        help="最大处理文件数")
     parser.add_argument("--start-from", "-s", type=int, default=0,
                        help="起始文件索引 (默认: 0)")
+    parser.add_argument("--max-workers", "-w", type=int, default=10,
+                       help="并行处理的工作线程数 (默认: 10)")
+    
+    # 重试相关参数
+    parser.add_argument("--max-retries", type=int, default=3,
+                       help="最大重试次数 (默认: 3)")
+    parser.add_argument("--timeout", type=int, default=60,
+                       help="超时时间（秒）(默认: 60)")
+    parser.add_argument("--backoff-factor", type=float, default=2.0,
+                       help="退避因子 (默认: 2.0)")
     
     args = parser.parse_args()
     
@@ -209,7 +222,11 @@ def main():
         output_dir=args.output_dir,
         target_dir=args.target_dir,
         max_files=args.max_files,
-        start_from=args.start_from
+        start_from=args.start_from,
+        max_workers=args.max_workers,
+        max_retries=args.max_retries,
+        timeout=args.timeout,
+        backoff_factor=args.backoff_factor
     )
 
 
