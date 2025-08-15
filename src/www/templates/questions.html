@@ -369,7 +369,7 @@
             <div class="question-header">
                 <div>
                     <div class="question-id">题目ID: {{ question.question_id }}</div>
-                    <div class="question-type">题型: {{ type_description }}</div>
+                    <div class="question-type">题型: {{ type_descriptions.get(question.question_type, question.question_type) if question.question_type else '未知题型' }}</div>
                 </div>
                 <div style="text-align: right;">
                     <div>置信度: <span class="confidence">{{ "%.2f"|format(question.confidence) }}</span></div>

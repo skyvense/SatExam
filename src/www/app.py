@@ -126,17 +126,21 @@ def get_exam_names():
     # 将Row对象转换为字典
     return [dict(row) for row in results]
 
-def get_questions_by_type(question_type, limit=100, order='time', start_question=1, exam_name=None):
+def get_questions_by_type(question_type, limit=100, order='random', start_question=1, exam_name=None):
     """根据题型获取题目"""
     conn = get_db_connection()
     cursor = conn.cursor()
     
     # 构建WHERE条件
     where_conditions = [
-        "question_type = ?",
         "(options IS NOT NULL AND LENGTH(options) >= 10)"
     ]
-    params = [question_type]
+    params = []
+    
+    # 如果指定了题型，添加过滤条件
+    if question_type and question_type != "全部":
+        where_conditions.append("question_type = ?")
+        params.append(question_type)
     
     # 如果指定了考试名称，添加过滤条件
     if exam_name and exam_name != "全部":
@@ -155,7 +159,7 @@ def get_questions_by_type(question_type, limit=100, order='time', start_question
             LIMIT ?
         """, params + [limit])
     else:
-        # 按时间排序（默认），支持起始位置
+        # 按时间排序，支持起始位置
         cursor.execute(f"""
             SELECT id, file_path, question_id, question_type, content, options, confidence, add_time, exam_name
             FROM questions 
@@ -183,28 +187,31 @@ def index():
 @app.route('/questions')
 def questions():
     """题目展示页面"""
-    question_type = request.args.get('type')
+    question_type = request.args.get('type', '全部')
     limit = int(request.args.get('limit', 100))
     mode = request.args.get('mode', 'text')
-    order = request.args.get('order', 'time')
+    order = request.args.get('order', 'random')
     start_question = int(request.args.get('start_question', 1))
     exam_name = request.args.get('exam_name', '全部')
-    
-    if not question_type:
-        return "请选择题型", 400
     
     # 如果是随机模式，忽略起始题目参数
     if order == 'random':
         start_question = 1
     
     questions = get_questions_by_type(question_type, limit, order, start_question, exam_name)
-    type_description = QUESTION_TYPES.get(question_type, question_type)
+    
+    # 确定题型描述
+    if question_type and question_type != "全部":
+        type_description = QUESTION_TYPES.get(question_type, question_type)
+    else:
+        type_description = "全部题型"
     
     if mode == 'images':
         return render_template('questions_images.html', 
                              questions=questions, 
                              question_type=question_type,
                              type_description=type_description,
+                             type_descriptions=QUESTION_TYPES,
                              total_count=len(questions),
                              order=order,
                              start_question=start_question,
@@ -214,6 +221,7 @@ def questions():
                              questions=questions, 
                              question_type=question_type,
                              type_description=type_description,
+                             type_descriptions=QUESTION_TYPES,
                              total_count=len(questions),
                              order=order,
                              start_question=start_question,
@@ -232,14 +240,11 @@ def api_question_types():
 @app.route('/api/questions')
 def api_questions():
     """API: 获取题目列表"""
-    question_type = request.args.get('type')
+    question_type = request.args.get('type', '全部')
     limit = int(request.args.get('limit', 100))
-    order = request.args.get('order', 'time')
+    order = request.args.get('order', 'random')
     start_question = int(request.args.get('start_question', 1))
     exam_name = request.args.get('exam_name', '全部')
-    
-    if not question_type:
-        return jsonify({'error': '请选择题目类型'}), 400
     
     # 如果是随机模式，忽略起始题目参数
     if order == 'random':
@@ -331,17 +336,22 @@ def check_answer_with_ai(question_content, options, user_answer):
         
         if response.status_code == 200:
             response_data = response.json()
+            ai_response = response_data['choices'][0]['message']['content']
+            return {
+                'success': True,
+                'analysis': ai_response
+            }
+        elif response.status_code == 401:
+            # API密钥无效
+            return {
+                'success': False,
+                'error': 'AI服务暂时不可用：API密钥已过期或无效。请联系管理员更新API密钥。'
+            }
         else:
             return {
                 'success': False,
-                'error': f'API调用失败: {response.status_code} - {response.text[:100]}'
+                'error': f'AI服务暂时不可用：API调用失败 ({response.status_code})。请稍后重试。'
             }
-        
-        ai_response = response_data['choices'][0]['message']['content']
-        return {
-            'success': True,
-            'analysis': ai_response
-        }
             
     except Exception as e:
         import traceback
@@ -351,7 +361,7 @@ def check_answer_with_ai(question_content, options, user_answer):
         print(f"错误信息: {str(e)}")
         return {
             'success': False,
-            'error': f'检查答案时出错: {str(e)}'
+            'error': f'AI服务暂时不可用：{str(e)}。请稍后重试。'
         }
 
 @app.route('/api/check_answer', methods=['POST'])

@@ -192,7 +192,7 @@
                 <div class="form-group">
                     <label for="category">选择分类：</label>
                     <select name="category" id="category" onchange="updateQuestionTypes()">
-                        <option value="">Please select category</option>
+                        <option value="">📚 全部题型</option>
                         <option value="reading_writing">📖 Reading & Writing</option>
                         <option value="math">🔢 Math</option>
                         <option value="special">📋 Special</option>
@@ -201,8 +201,8 @@
                 
                 <div class="form-group">
                     <label for="type">选择题型：</label>
-                    <select name="type" id="type" required>
-                        <option value="">Please select question type</option>
+                    <select name="type" id="type">
+                        <option value="全部">📚 全部题型</option>
                     </select>
                 </div>
             </div>
@@ -228,28 +228,30 @@
                 </div>
             </div>
             
-            <div class="form-group">
-                <label for="mode">显示模式：</label>
-                <select name="mode" id="mode" required>
-                    <option value="text">📝 文字模式（显示题目文字和选项）</option>
-                    <option value="images">🖼️ 全图片模式（只显示题目图片）</option>
-                </select>
-                <small style="color: #666;">文字模式适合阅读，全图片模式适合快速浏览</small>
-            </div>
-            
-            <div class="form-group">
-                <label for="order">排序模式：</label>
-                <select name="order" id="order" required onchange="toggleStartQuestion()">
-                    <option value="time">📅 按时间顺序（最新优先）</option>
-                    <option value="random">🎲 随机顺序</option>
-                </select>
-                <small style="color: #666;">按时间顺序适合复习，随机顺序适合练习</small>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="mode">显示模式：</label>
+                    <select name="mode" id="mode" required>
+                        <option value="text">📝 文字模式（显示题目文字和选项）</option>
+                        <option value="images">🖼️ 全图片模式（只显示题目图片）</option>
+                    </select>
+                    <small style="color: #666;">文字模式适合阅读，全图片模式适合快速浏览</small>
+                </div>
+                
+                <div class="form-group">
+                    <label for="order">排序模式：</label>
+                    <select name="order" id="order" required onchange="toggleStartQuestion()">
+                        <option value="random">🎲 随机顺序（默认）</option>
+                        <option value="time">📅 按时间顺序（最新优先）</option>
+                    </select>
+                    <small style="color: #666;">随机顺序适合练习，按时间顺序适合复习</small>
+                </div>
             </div>
             
             <div class="form-group" id="startQuestionGroup" style="display: none;">
                 <label for="start_question">起始题目：</label>
                 <input type="number" name="start_question" id="start_question" value="1" min="1" required>
-                <small style="color: #666;">从第几道题开始显示（仅在顺序模式下有效）</small>
+                <small style="color: #666;">从第几道题开始显示（仅在时间顺序模式下有效）</small>
             </div>
             
             <button type="submit" class="btn">🚀 开始查看题目</button>
@@ -427,9 +429,12 @@
             const selectedCategory = categorySelect.value;
             
             // 清空题型选择
-            typeSelect.innerHTML = '<option value="">Please select question type</option>';
+            typeSelect.innerHTML = '<option value="全部">📚 全部题型</option>';
             
-            if (!selectedCategory) return;
+            if (!selectedCategory) {
+                // 如果没有选择分类，保持全部题型选项
+                return;
+            }
             
             // 获取选中分类的题型
             const categoryTypes = questionCategories[selectedCategory].types;
