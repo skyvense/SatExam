@@ -336,22 +336,17 @@ def check_answer_with_ai(question_content, options, user_answer):
         
         if response.status_code == 200:
             response_data = response.json()
-            ai_response = response_data['choices'][0]['message']['content']
-            return {
-                'success': True,
-                'analysis': ai_response
-            }
-        elif response.status_code == 401:
-            # API密钥无效
-            return {
-                'success': False,
-                'error': 'AI服务暂时不可用：API密钥已过期或无效。请联系管理员更新API密钥。'
-            }
         else:
             return {
                 'success': False,
-                'error': f'AI服务暂时不可用：API调用失败 ({response.status_code})。请稍后重试。'
+                'error': f'API调用失败: {response.status_code} - {response.text[:100]}'
             }
+        
+        ai_response = response_data['choices'][0]['message']['content']
+        return {
+            'success': True,
+            'analysis': ai_response
+        }
             
     except Exception as e:
         import traceback
@@ -361,7 +356,7 @@ def check_answer_with_ai(question_content, options, user_answer):
         print(f"错误信息: {str(e)}")
         return {
             'success': False,
-            'error': f'AI服务暂时不可用：{str(e)}。请稍后重试。'
+            'error': f'检查答案时出错: {str(e)}'
         }
 
 @app.route('/api/check_answer', methods=['POST'])
