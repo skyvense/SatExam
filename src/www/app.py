@@ -29,20 +29,58 @@ def from_json_filter(value):
     except:
         return value
 
-# SAT题型定义（从qtype.py复制）
+# SAT题型定义（新分类）
 QUESTION_TYPES = {
-    "reading-evidence": "阅读证据题",
-    "reading-words-in-context": "阅读词汇题", 
-    "reading-command-of-evidence": "阅读理解题",
-    "writing-lang-expression-of-ideas": "写作表达题",
-    "writing-lang-grammar": "写作语法题",
-    "writing-lang-command-of-evidence": "写作证据题",
-    "writing-lang-words-in-context": "写作词汇题",
-    "math-heart-of-algebra": "代数核心题",
-    "math-problem-solving-data-analysis": "数据分析题",
-    "math-passport-to-advanced-math": "高等数学题",
-    "math-additional-topics": "附加数学题",
-    "essay-analysis": "作文分析题"
+    # Reading & Writing 题型
+    "text_structure_and_purpose": "Text Structure and Purpose",
+    "cross_text_connections": "Cross-Text Connections",
+    "words_in_context": "Words in Context",
+    "central_ideas_and_details": "Central Ideas and Details",
+    "command_of_evidence_quantitative": "Command of Evidence – Quantitative",
+    "command_of_evidence_textual": "Command of Evidence – Textual",
+    "inference": "Inference",
+    "boundaries": "Boundaries",
+    "form_structure_and_sense": "Form, Structure, and Sense",
+    "transitions": "Transitions",
+    "rhetorical_synthesis": "Rhetorical Synthesis",
+    
+    # Math 题型
+    "algebra": "Algebra",
+    "percents_and_ratios": "Percents and Ratios",
+    "advanced_math": "Advanced Math",
+    "powers_and_roots": "Powers and Roots",
+    "word_problems": "Word Problems",
+    "statistics": "Statistics",
+    "data_analysis": "Data Analysis",
+    "coordinate_plane": "Coordinate Plane",
+    "geometry": "Geometry",
+    "trigonometry": "Trigonometry",
+    
+    # 特殊题型
+    "title": "Title & Instructions"
+}
+
+# 题型分类
+QUESTION_CATEGORIES = {
+    "reading_writing": {
+        "name": "Reading & Writing",
+        "types": [
+            "text_structure_and_purpose", "cross_text_connections", "words_in_context",
+            "central_ideas_and_details", "command_of_evidence_quantitative", "command_of_evidence_textual",
+            "inference", "boundaries", "form_structure_and_sense", "transitions", "rhetorical_synthesis"
+        ]
+    },
+    "math": {
+        "name": "Math",
+        "types": [
+            "algebra", "percents_and_ratios", "advanced_math", "powers_and_roots",
+            "word_problems", "statistics", "data_analysis", "coordinate_plane", "geometry", "trigonometry"
+        ]
+    },
+    "special": {
+        "name": "Special",
+        "types": ["title"]
+    }
 }
 
 def get_db_connection():
@@ -66,7 +104,8 @@ def get_question_types():
     results = cursor.fetchall()
     conn.close()
     
-    return results
+    # 将Row对象转换为字典
+    return [dict(row) for row in results]
 
 def get_exam_names():
     """获取所有考试名称及其数量"""
@@ -84,7 +123,8 @@ def get_exam_names():
     results = cursor.fetchall()
     conn.close()
     
-    return results
+    # 将Row对象转换为字典
+    return [dict(row) for row in results]
 
 def get_questions_by_type(question_type, limit=100, order='time', start_question=1, exam_name=None):
     """根据题型获取题目"""
@@ -137,7 +177,8 @@ def index():
     return render_template('index.html', 
                          question_types=question_types, 
                          type_descriptions=QUESTION_TYPES,
-                         exam_names=exam_names)
+                         exam_names=exam_names,
+                         question_categories=QUESTION_CATEGORIES)
 
 @app.route('/questions')
 def questions():
@@ -150,7 +191,7 @@ def questions():
     exam_name = request.args.get('exam_name', '全部')
     
     if not question_type:
-        return "请选择题目类型", 400
+        return "请选择题型", 400
     
     # 如果是随机模式，忽略起始题目参数
     if order == 'random':
@@ -223,7 +264,7 @@ def api_questions():
 def serve_image(filename):
     """提供图片文件服务"""
     # 构建完整的图片路径
-    image_path = f"/Volumes/ext/SatExams/{filename}"
+    image_path = f"/Volumes/ext/SatExams/data/output/{filename}"
     
     if os.path.exists(image_path):
         # 如果图片存在，返回图片

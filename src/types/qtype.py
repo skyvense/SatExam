@@ -20,74 +20,122 @@ from queue import Queue
 
 import openai
 
-# SAT题型定义
+# SAT题型定义 - 新分类
 QUESTION_TYPES = {
-    # Reading题型
-    "reading-evidence": {
-        "keywords": ["evidence", "support", "best supports", "most strongly supports", "provides the best evidence"],
-        "patterns": [r"which.*evidence", r"best.*supports", r"most strongly supports"],
-        "description": "阅读证据题"
-    },
-    "reading-words-in-context": {
-        "keywords": ["most nearly means", "as used", "closest in meaning", "best definition"],
-        "patterns": [r"most nearly means", r"as used.*means", r"closest in meaning"],
-        "description": "阅读词汇题"
-    },
-    "reading-command-of-evidence": {
-        "keywords": ["command", "control", "author's purpose", "author's attitude", "tone"],
-        "patterns": [r"author.*purpose", r"author.*attitude", r"tone.*passage"],
-        "description": "阅读理解题"
+    # 特殊分类
+    "title": {
+        "keywords": ["important reminders", "pencil required", "test security", "sat", "digital"],
+        "patterns": [r"important reminders", r"pencil required", r"test security"],
+        "description": "考试说明和标题"
     },
     
-    # Writing题型
-    "writing-lang-expression-of-ideas": {
-        "keywords": ["expression", "ideas", "development", "organization", "effective", "improve"],
-        "patterns": [r"expression.*ideas", r"development.*organization", r"most effective"],
-        "description": "写作表达题"
+    # SAT Reading & Writing 题型
+    "text_structure_and_purpose": {
+        "keywords": ["purpose", "structure", "author's purpose", "main purpose", "organization", "structure serves"],
+        "patterns": [r"purpose.*passage", r"structure.*purpose", r"author.*purpose", r"main purpose"],
+        "description": "理解文章目的结构"
     },
-    "writing-lang-grammar": {
-        "keywords": ["grammar", "punctuation", "sentence structure", "verb tense", "subject-verb agreement"],
-        "patterns": [r"grammar", r"punctuation", r"verb.*tense", r"subject.*verb"],
-        "description": "写作语法题"
+    "cross_text_connections": {
+        "keywords": ["both passages", "two texts", "connection", "relationship", "compare", "contrast"],
+        "patterns": [r"both passages", r"two texts", r"connection.*passages", r"relationship.*texts"],
+        "description": "多文本联系比较"
     },
-    "writing-lang-command-of-evidence": {
-        "keywords": ["evidence", "support", "argument", "claim", "reasoning"],
-        "patterns": [r"evidence.*argument", r"support.*claim", r"reasoning"],
-        "description": "写作证据题"
+    "words_in_context": {
+        "keywords": ["most nearly means", "as used", "closest in meaning", "best definition", "context"],
+        "patterns": [r"most nearly means", r"as used.*means", r"closest in meaning", r"context.*means"],
+        "description": "上下文理解词义"
     },
-    "writing-lang-words-in-context": {
-        "keywords": ["vocabulary", "word choice", "precise", "appropriate", "context"],
-        "patterns": [r"vocabulary", r"word.*choice", r"precise.*word"],
-        "description": "写作词汇题"
+    "central_ideas_and_details": {
+        "keywords": ["main idea", "central idea", "main point", "primary purpose", "supporting details"],
+        "patterns": [r"main idea", r"central idea", r"main point", r"supporting details"],
+        "description": "找主旨细节"
+    },
+    "command_of_evidence_quantitative": {
+        "keywords": ["data", "table", "chart", "graph", "statistics", "evidence", "quantitative"],
+        "patterns": [r"data.*evidence", r"table.*evidence", r"chart.*evidence", r"quantitative.*evidence"],
+        "description": "数据与观点匹配"
+    },
+    "command_of_evidence_textual": {
+        "keywords": ["evidence", "support", "best supports", "most strongly supports", "textual evidence"],
+        "patterns": [r"which.*evidence", r"best.*supports", r"most strongly supports", r"textual evidence"],
+        "description": "找文本证据"
+    },
+    "inference": {
+        "keywords": ["infer", "imply", "suggest", "indicate", "conclude", "implication"],
+        "patterns": [r"can be inferred", r"implies", r"suggests", r"indicates", r"conclude"],
+        "description": "文本逻辑推断"
+    },
+    "boundaries": {
+        "keywords": ["sentence", "comma", "period", "punctuation", "boundary", "complete sentence"],
+        "patterns": [r"sentence.*boundary", r"comma.*splice", r"run.*on", r"complete sentence"],
+        "description": "句子界限避免错误"
+    },
+    "form_structure_and_sense": {
+        "keywords": ["structure", "organization", "logical order", "paragraph", "sentence order"],
+        "patterns": [r"logical order", r"sentence.*order", r"paragraph.*structure", r"organization"],
+        "description": "分析文本结构"
+    },
+    "transitions": {
+        "keywords": ["transition", "however", "therefore", "moreover", "furthermore", "consequently"],
+        "patterns": [r"transition.*word", r"however", r"therefore", r"moreover", r"furthermore"],
+        "description": "选择恰当过渡"
+    },
+    "rhetorical_synthesis": {
+        "keywords": ["synthesis", "combine", "integrate", "rhetorical", "argument", "persuasive"],
+        "patterns": [r"rhetorical.*synthesis", r"combine.*information", r"integrate.*passages", r"synthesis"],
+        "description": "整合信息理解论证"
     },
     
-    # Math题型
-    "math-heart-of-algebra": {
-        "keywords": ["equation", "inequality", "linear", "quadratic", "function", "graph", "slope", "intercept"],
-        "patterns": [r"equation", r"inequality", r"linear.*function", r"slope", r"intercept"],
-        "description": "代数核心题"
+    # SAT Math 题型
+    "algebra": {
+        "keywords": ["equation", "inequality", "linear", "solve", "variable", "expression"],
+        "patterns": [r"equation", r"inequality", r"linear.*equation", r"solve.*equation"],
+        "description": "解线性方程表达式不等式"
     },
-    "math-problem-solving-data-analysis": {
-        "keywords": ["data", "table", "chart", "graph", "statistics", "mean", "median", "percent", "ratio"],
-        "patterns": [r"data.*table", r"chart.*graph", r"statistics", r"mean.*median"],
-        "description": "数据分析题"
+    "percents_and_ratios": {
+        "keywords": ["percent", "ratio", "proportion", "percentage", "rate", "fraction"],
+        "patterns": [r"percent", r"ratio", r"proportion", r"percentage", r"rate"],
+        "description": "比例百分比计算"
     },
-    "math-passport-to-advanced-math": {
-        "keywords": ["polynomial", "quadratic", "exponential", "radical", "complex", "advanced"],
-        "patterns": [r"polynomial", r"quadratic.*equation", r"exponential", r"radical"],
-        "description": "高等数学题"
+    "advanced_math": {
+        "keywords": ["quadratic", "polynomial", "function", "exponential", "advanced", "complex"],
+        "patterns": [r"quadratic.*equation", r"polynomial", r"function", r"exponential"],
+        "description": "二次方程多项式函数"
     },
-    "math-additional-topics": {
-        "keywords": ["geometry", "trigonometry", "circle", "triangle", "volume", "area", "angle"],
-        "patterns": [r"geometry", r"trigonometry", r"circle.*area", r"triangle.*angle"],
-        "description": "附加数学题"
+    "powers_and_roots": {
+        "keywords": ["power", "exponent", "root", "square root", "cube root", "radical"],
+        "patterns": [r"power", r"exponent", r"square root", r"cube root", r"radical"],
+        "description": "指数根号运算"
     },
-    
-    # Essay题型
-    "essay-analysis": {
-        "keywords": ["essay", "analysis", "argument", "evaluate", "persuasive", "rhetorical"],
-        "patterns": [r"essay.*analysis", r"evaluate.*argument", r"persuasive.*techniques"],
-        "description": "作文分析题"
+    "word_problems": {
+        "keywords": ["word problem", "real world", "application", "scenario", "situation"],
+        "patterns": [r"word problem", r"real world", r"application", r"scenario"],
+        "description": "现实转化为数学表达"
+    },
+    "statistics": {
+        "keywords": ["mean", "median", "mode", "standard deviation", "statistics", "average"],
+        "patterns": [r"mean", r"median", r"mode", r"standard deviation", r"statistics"],
+        "description": "理解运用统计量"
+    },
+    "data_analysis": {
+        "keywords": ["data", "analysis", "interpret", "table", "chart", "graph"],
+        "patterns": [r"data.*analysis", r"interpret.*data", r"table.*data", r"chart.*data"],
+        "description": "解释数据量化推理"
+    },
+    "coordinate_plane": {
+        "keywords": ["coordinate", "plane", "slope", "intercept", "point", "line"],
+        "patterns": [r"coordinate.*plane", r"slope", r"intercept", r"point.*line"],
+        "description": "坐标平面几何代数"
+    },
+    "geometry": {
+        "keywords": ["geometry", "area", "volume", "perimeter", "circle", "triangle", "angle"],
+        "patterns": [r"geometry", r"area", r"volume", r"perimeter", r"circle", r"triangle"],
+        "description": "形状角度面积体积"
+    },
+    "trigonometry": {
+        "keywords": ["trigonometry", "sine", "cosine", "tangent", "angle", "triangle"],
+        "patterns": [r"trigonometry", r"sine", r"cosine", r"tangent", r"sohcahtoa"],
+        "description": "直角三角形三角函数"
     }
 }
 
@@ -192,7 +240,10 @@ class QuestionTypeAnalyzer:
                                 "instruction" in content or 
                                 "copyright" in content or 
                                 "college board" in content or
-                                "page" in content and len(content) < 100):
+                                "page" in content and len(content) < 100 or
+                                "pencil required" in content or
+                                "test security" in content or
+                                "violation" in content):
                                 continue
                             question = {
                                 "id": question_data.get("id", question_id),
@@ -493,47 +544,66 @@ class QuestionTypeAnalyzer:
         return self._rule_classify_question(text)
     
     def _ai_classify_question(self, text: str) -> Tuple[str, float, Dict[str, float]]:
-        """使用AI分析题型"""
+        """使用AI分析题型 - 使用更便宜的模型"""
+        
+        # 首先检查是否是考试说明或非题目内容
+        text_lower = text.lower()
+        title_keywords = [
+            "important reminders", "pencil required", "test security", 
+            "no.2 pencil", "mechanical pencil", "violation", "sat", "digital"
+        ]
+        
+        if any(keyword in text_lower for keyword in title_keywords):
+            return "title", 1.0, {"title": 10}
         
         prompt = f"""
-请分析以下SAT考试题目，识别其题型。请从以下题型中选择最合适的一个：
+分析这个SAT题目，选择最合适的题型。只返回题型代码，不要其他内容。
 
-**Reading题型:**
-- reading-evidence: 阅读证据题（要求选择支持论点的证据）
-- reading-words-in-context: 阅读词汇题（要求解释词汇在上下文中的含义）
-- reading-command-of-evidence: 阅读理解题（要求理解作者意图、态度等）
+**重要判断标准：**
 
-**Writing题型:**
-- writing-lang-expression-of-ideas: 写作表达题（关于表达、组织、发展观点）
-- writing-lang-grammar: 写作语法题（关于语法、标点、句子结构）
-- writing-lang-command-of-evidence: 写作证据题（关于论证、证据、推理）
-- writing-lang-words-in-context: 写作词汇题（关于词汇选择、精确表达）
+**数学题型判断：**
+- algebra: 纯数学计算，解方程、函数计算、代数运算（如：3x+4=10, f(x)=2x²-5x, 求f(8)）
+- word_problems: 有现实场景描述，需要建立数学模型的文字题（如：学生卖贴纸赚钱，需要卖多少个）
+- advanced_math: 二次方程、多项式、复杂函数（如：f(x)=(x-a)(x-b), 二次函数顶点）
+- geometry: 几何图形、面积体积计算（如：三角形面积、圆的周长）
+- trigonometry: 三角函数、直角三角形（如：sin, cos, tan, SOH-CAH-TOA）
+- coordinate_plane: 坐标平面、直线斜率、截距（如：y=mx+b, 直线截距）
+- statistics: 统计量、概率（如：平均数、中位数、概率计算）
+- data_analysis: 图表数据分析（如：表格、图表解读）
+- percents_and_ratios: 百分比、比例计算（如：30% of 200, 比例关系）
+- powers_and_roots: 指数、根号运算（如：√x, x², 指数运算）
 
-**Math题型:**
-- math-heart-of-algebra: 代数核心题（方程、不等式、线性函数等）
-- math-problem-solving-data-analysis: 数据分析题（图表、统计、百分比等）
-- math-passport-to-advanced-math: 高等数学题（多项式、二次方程、指数等）
-- math-additional-topics: 附加数学题（几何、三角、圆、三角形等）
+**阅读写作题型判断：**
+- words_in_context: 词汇填空、词义解释（如：Which choice completes the text...）
+- boundaries: 语法标点、句子结构（如：comma splice, run-on sentence）
+- transitions: 过渡词选择（如：however, therefore, moreover）
+- central_ideas_and_details: 主旨大意、支持细节（如：main idea, supporting details）
+- command_of_evidence_textual: 找文本证据（如：which evidence best supports...）
+- command_of_evidence_quantitative: 数据图表证据（如：table shows, graph indicates）
+- inference: 逻辑推断（如：can be inferred, suggests, implies）
+- form_structure_and_sense: 文章结构、逻辑顺序（如：logical order, sentence order）
+- text_structure_and_purpose: 文章目的结构（如：author's purpose, structure serves）
+- cross_text_connections: 多文本比较（如：both passages, two texts）
+- rhetorical_synthesis: 信息整合论证（如：synthesis, combine information）
 
-**Essay题型:**
-- essay-analysis: 作文分析题（分析论证、评估论点等）
-
-请只返回题型代码，不要其他内容。
+**题型代码：**
+- text_structure_and_purpose, cross_text_connections, words_in_context, central_ideas_and_details, command_of_evidence_quantitative, command_of_evidence_textual, inference, boundaries, form_structure_and_sense, transitions, rhetorical_synthesis, algebra, percents_and_ratios, advanced_math, powers_and_roots, word_problems, statistics, data_analysis, coordinate_plane, geometry, trigonometry
 
 题目内容：
 {text}
 """
 
         try:
+            # 使用更便宜的模型
             response = self.client.chat.completions.create(
-                model="anthropic/claude-3-5-sonnet",  # 使用Claude模型
+                model="openai/gpt-4o-mini",  # 使用GPT-4o-mini，更稳定且便宜
                 messages=[
                     {
                         "role": "user",
                         "content": prompt
                     }
                 ],
-                max_tokens=50,
+                max_tokens=20,  # 减少token使用
                 temperature=0.1
             )
             
